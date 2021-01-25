@@ -1,4 +1,4 @@
-export default function RecipeDetail() {
+export default function RecipeDetails() {
   return (
     <p>
       This easy and quick recipe to make your new favourite pizza. Add a

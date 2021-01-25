@@ -1,14 +1,14 @@
-import RecipeDetail from "../components/recipeDetail";
-import RecipeIngredient from "../components/recipeIngredient";
-import RecipeInstruction from "../components/recipeInstruction";
+import RecipeDetails from "../components/recipeDetails";
+import RecipeIngredients from "../components/recipeIngredients";
+import RecipeInstructions from "../components/recipeInstructions";
 
 export default function Recipes() {
   return (
     <>
-      <h1>Recipes</h1>
-      <RecipeDetail />
-      <RecipeInstruction />
-      <RecipeIngredient />
+      <h1>Recipe</h1>
+      <RecipeDetails />
+      <RecipeInstructions />
+      <RecipeIngredients />
     </>
   );
 }

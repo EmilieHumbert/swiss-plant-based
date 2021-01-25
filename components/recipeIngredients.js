@@ -1,4 +1,4 @@
-export default function RecipeIngredient() {
+export default function RecipeIngredients() {
   return (
     <>
       <h1>Ingredients</h1>

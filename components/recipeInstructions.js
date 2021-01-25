@@ -1,4 +1,4 @@
-export default function RecipeInstruction() {
+export default function RecipeInstructions() {
   return (
     <>
       <h1>Instructions</h1>
