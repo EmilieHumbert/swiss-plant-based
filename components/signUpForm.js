@@ -1,10 +1,40 @@
 import { useForm } from "react-hook-form";
+import { auth } from "../config/fire.config";
 
 export default function SignUpForm() {
   const { register, errors, handleSubmit } = useForm();
-  const onSubmit = (data) => {
-    console.log(data);
+
+  const createUser = (user) => {
+    return db
+      .collection("users")
+      .doc(user.uid)
+      .set(user)
+      .then(() => {
+        console.log("Success");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
+
+  const signUp = ({ name, email, password }) => {
+    return auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((response) => {
+        createUser({ uid: response.user.uid, email, name });
+        console.log(response);
+      })
+      .catch((error) => {
+        return { error };
+      });
+  };
+
+  const onSubmit = (data) => {
+    return signUp(data).then((user) => {
+      console.log(user);
+    });
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div>
