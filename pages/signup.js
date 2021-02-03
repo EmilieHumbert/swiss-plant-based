@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SignUpForm from "../components/signUpForm";
 
 export default function signUpPage() {
   return (
@@ -13,7 +14,9 @@ export default function signUpPage() {
             </Link>
           </p>
         </div>
-        <div>{/* Create sign up form component and add it here */}</div>
+        <div>
+          <SignUpForm />
+        </div>
       </div>
     </div>
   );
