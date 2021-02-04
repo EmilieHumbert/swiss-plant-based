@@ -1,4 +1,5 @@
 import Link from "next/link";
+import LoginForm from "../components/forms/loginForm";
 
 export default function logInPage() {
   return (
@@ -11,7 +12,7 @@ export default function logInPage() {
         </Link>
       </div>
       <div>
-        {/* Create login form component and add here */}
+        <LoginForm />
       </div>
     </div>
   );
