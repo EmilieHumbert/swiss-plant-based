@@ -5,18 +5,16 @@ export default function signUpPage() {
   return (
     <div>
       <div>
-        <div>
-          <h2>Sign up</h2>
-          <p>
-            Already have an account?
-            <Link href="/login">
-              <a href="#"></a>
-            </Link>
-          </p>
-        </div>
-        <div>
-          <SignUpForm />
-        </div>
+        <h2>Sign up</h2>
+        <p>
+          Already have an account?
+          <Link href="/login">
+            <a href="#"></a>
+          </Link>
+        </p>
+      </div>
+      <div>
+        <SignUpForm />
       </div>
     </div>
   );
