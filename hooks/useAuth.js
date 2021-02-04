@@ -1,4 +1,4 @@
-import { useState, useContext, createContext } from "react";
+import { useState, useEffect, useContext, createContext } from "react";
 import { auth, db } from "../config/fire.config";
 
 const authContext = createContext({ user: {} });
@@ -41,5 +41,55 @@ const useAuthProvider = () => {
         return { error };
       });
   };
-  return { user, signUp };
+
+  const getUserAdditionalData = (user) => {
+    return db
+      .collection("users")
+      .doc(user.uid)
+      .get()
+      .then((userData) => {
+        if (userData.data()) {
+          setUser(userData.data());
+        }
+      });
+  };
+
+  const signIn = ({ email, password }) => {
+    return auth
+      .signInWithEmailAndPassword(email, password)
+      .then((response) => {
+        setUser(response.user);
+        getUserAdditionalData;
+        return response.user;
+      })
+      .catch((error) => {
+        return { error };
+      });
+  };
+
+  const handleAuthStateChanged = (user) => {
+    setUser(user);
+    if (user) {
+      getUserAdditionalData(user);
+    }
+  };
+
+  useEffect(() => {
+    const unsub = auth.onAuthStateChanged(handleAuthStateChanged);
+
+    return () => unsub();
+  }, []);
+
+  useEffect(() => {
+    if (user?.uid) {
+      // Subscribe to user document on mount
+      const unsubscribe = db
+        .collection("users")
+        .doc(user.uid)
+        .onSnapshot((doc) => setUser(doc.data()));
+      return () => unsubscribe();
+    }
+  }, []);
+
+  return { user, signUp, signIn };
 };
