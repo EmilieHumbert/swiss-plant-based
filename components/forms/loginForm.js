@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../hooks/useAuth";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 export default function LoginForm() {
   const { register, errors, handleSubmit } = useForm();
@@ -55,6 +56,11 @@ export default function LoginForm() {
         <span>
           <button type="submit">Log in</button>
         </span>
+      </div>
+      <div>
+        <Link href="/reset-password">
+          <a href="#">Forgot your password?</a>
+        </Link>
       </div>
     </form>
   );
