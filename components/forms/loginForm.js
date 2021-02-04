@@ -58,7 +58,7 @@ export default function LoginForm() {
         </span>
       </div>
       <div>
-        <Link href="/reset-password">
+        <Link href="/resetPassword">
           <a href="#">Forgot your password?</a>
         </Link>
       </div>
