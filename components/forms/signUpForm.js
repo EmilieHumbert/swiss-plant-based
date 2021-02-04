@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { auth, db } from "../config/fire.config";
+import { auth, db } from "../../config/fire.config";
 
 export default function SignUpForm() {
   const { register, errors, handleSubmit } = useForm();
