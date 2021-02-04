@@ -91,5 +91,9 @@ const useAuthProvider = () => {
     }
   }, []);
 
-  return { user, signUp, signIn };
+  const signOut = () => {
+    return auth.signOut().then(() => setUser(false));
+  };
+
+  return { user, signUp, signIn, signOut };
 };
