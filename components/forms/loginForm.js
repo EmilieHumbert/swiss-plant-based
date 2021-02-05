@@ -1,21 +1,37 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useAuth } from "../../hooks/useAuth";
+
 import { useRouter } from "next/router";
 import Link from "next/link";
 
+import { useAuth } from "../../hooks/useAuth";
+import Button from "../button";
+
 export default function LoginForm() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   const { register, errors, handleSubmit } = useForm();
+
   const auth = useAuth();
   const router = useRouter();
 
   const onSubmit = (data) => {
-    return auth.signIn(data).then(() => {
-      router.push("/dashboard");
+    setIsLoading(true);
+    setError(null);
+    return auth.signIn(data).then((response) => {
+      setIsLoading(false);
+      response.error ? setError(response.error) : router.push("/dashboard");
     });
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      {error?.message && (
+        <div>
+          <span>{error.message}</span>
+        </div>
+      )}
       <div>
         <label htmlFor="email">Email address</label>
         <div>
@@ -54,7 +70,7 @@ export default function LoginForm() {
       </div>
       <div>
         <span>
-          <button type="submit">Log in</button>
+          <Button title="Login" type="submit" isLoading={isLoading} />
         </span>
       </div>
       <div>
