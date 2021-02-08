@@ -1,8 +1,12 @@
 import { useForm } from "react-hook-form";
 import { auth, db } from "../../config/fire.config";
 
+import { useRouter } from "next/router";
+
 export default function SignUpForm() {
   const { register, errors, handleSubmit } = useForm();
+
+  const router = useRouter();
 
   const createUser = (user) => {
     return db
@@ -31,6 +35,7 @@ export default function SignUpForm() {
 
   const onSubmit = (data) => {
     return signUp(data).then((user) => {
+      router.push("/dashboard");
       console.log(user);
     });
   };
