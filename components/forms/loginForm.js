@@ -7,7 +7,23 @@ import Link from "next/link";
 import { useAuth } from "../../hooks/useAuth";
 import Button from "../button";
 
+import TextField from "@material-ui/core/TextField";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    "& .MuiTextField-root": {
+      margin: theme.spacing(2),
+      width: "25ch",
+    },
+  },
+  button: {
+    margin: theme.spacing(2),
+  },
+}));
+
 export default function LoginForm() {
+  const classes = useStyles();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -26,19 +42,19 @@ export default function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      {error?.message && (
+    <div className={classes.root}>
+      <form noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+        {error?.message && (
+          <div>
+            <span>{error.message}</span>
+          </div>
+        )}
         <div>
-          <span>{error.message}</span>
-        </div>
-      )}
-      <div>
-        <label htmlFor="email">Email address</label>
-        <div>
-          <input
+          <TextField
             id="email"
-            type="email"
+            label="Email"
             name="email"
+            type="email"
             ref={register({
               required: "Please enter an email",
               pattern: {
@@ -46,17 +62,17 @@ export default function LoginForm() {
                 message: "Not a valid email",
               },
             })}
+            required
+            variant="outlined"
           />
           {errors.email && <div>{errors.email.message}</div>}
         </div>
-      </div>
-      <div>
-        <label htmlFor="password">Password</label>
         <div>
-          <input
+          <TextField
             id="password"
-            type="password"
+            label="Password"
             name="password"
+            type="password"
             ref={register({
               required: "Please enter a password",
               minLength: {
@@ -64,20 +80,27 @@ export default function LoginForm() {
                 message: "Should have at least 6 characters",
               },
             })}
+            required
+            variant="outlined"
           />
           {errors.password && <div>{errors.password.message}</div>}
         </div>
-      </div>
-      <div>
-        <span>
-          <Button title="Login" type="submit" isLoading={isLoading} />
-        </span>
-      </div>
-      <div>
-        <Link href="/resetPassword">
-          <a href="#">Forgot your password?</a>
-        </Link>
-      </div>
-    </form>
+        <div>
+          <span>
+            <Button
+              className={classes.button}
+              title="Login"
+              type="submit"
+              isLoading={isLoading}
+            />
+          </span>
+        </div>
+        <div>
+          <Link href="/resetPassword">
+            <a href="#">Forgot your password?</a>
+          </Link>
+        </div>
+      </form>
+    </div>
   );
 }
