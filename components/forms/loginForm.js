@@ -11,14 +11,13 @@ import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    "& .MuiTextField-root": {
-      margin: theme.spacing(2),
-      width: "25ch",
-    },
+  input: {
+    marginTop: theme.spacing(2),
   },
   button: {
-    margin: theme.spacing(2),
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    backgroundColor: "#eeeeee",
   },
 }));
 
@@ -27,7 +26,7 @@ export default function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const { control, register, errors, handleSubmit } = useForm({
+  const { control, errors, handleSubmit } = useForm({
     defaultValues: {
       email: "",
       password: "",
@@ -47,7 +46,7 @@ export default function LoginForm() {
   };
 
   return (
-    <form className={classes.root} onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       {error?.message && (
         <div>
           <span>{error.message}</span>
@@ -66,7 +65,8 @@ export default function LoginForm() {
           }}
           render={(props) => (
             <TextField
-              // id="email"
+              className={classes.input}
+              fullWidth
               label="Email"
               type="email"
               required
@@ -92,7 +92,8 @@ export default function LoginForm() {
           }}
           render={(props) => (
             <TextField
-              // id="password"
+              className={classes.input}
+              fullWidth
               label="Password"
               type="password"
               required
