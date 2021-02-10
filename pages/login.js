@@ -1,12 +1,11 @@
 import Link from "next/link";
 import LoginForm from "../components/forms/loginForm";
 
-import "fontsource-roboto";
 import Container from "@material-ui/core/Container";
 
 export default function logInPage() {
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth={"xs"}>
       <div>
         <h2>Log in</h2>
         <p>Don't have an account?</p>
