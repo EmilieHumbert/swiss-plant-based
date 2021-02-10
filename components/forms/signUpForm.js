@@ -1,10 +1,33 @@
-import { useForm } from "react-hook-form";
-import { auth, db } from "../../config/fire.config";
+import { Controller, useForm } from "react-hook-form";
 
 import { useRouter } from "next/router";
 
+import { auth, db } from "../../config/fire.config";
+
+import { Button, TextField } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  input: {
+    marginTop: theme.spacing(2),
+  },
+  button: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    backgroundColor: "#eeeeee",
+  },
+}));
+
 export default function SignUpForm() {
-  const { register, errors, handleSubmit } = useForm();
+  const classes = useStyles();
+
+  const { control, errors, handleSubmit } = useForm({
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+    },
+  });
 
   const router = useRouter();
 
@@ -43,54 +66,87 @@ export default function SignUpForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div>
-        <label htmlFor="name">Name</label>
-        <input
-          id="name"
-          type="text"
+        <Controller
           name="name"
-          ref={register({ required: "Please enter an name" })}
+          control={control}
+          rules={{
+            required: "Please enter your name",
+          }}
+          render={(props) => (
+            <TextField
+              className={classes.input}
+              fullWidth
+              label="Name"
+              type="text"
+              required
+              variant="outlined"
+              value={props.value}
+              onChange={props.onChange}
+              inputRef={props.ref}
+            />
+          )}
+        />
+        {errors.name && <div>{errors.name.message}</div>}
+      </div>
+      <div>
+        <Controller
+          name="email"
+          control={control}
+          rules={{
+            required: "Please enter an email",
+            pattern: {
+              value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+              message: "Not a valid email",
+            },
+          }}
+          render={(props) => (
+            <TextField
+              className={classes.input}
+              fullWidth
+              label="Email"
+              type="email"
+              required
+              variant="outlined"
+              value={props.value}
+              onChange={props.onChange}
+              inputRef={props.ref}
+            />
+          )}
+        />
+        {errors.email && <div>{errors.email.message}</div>}
+      </div>
+      <div>
+        <Controller
+          name="password"
+          control={control}
+          rules={{
+            required: "Please enter a password",
+            minLength: {
+              value: 6,
+              message: "Should have at least 6 characters",
+            },
+          }}
+          render={(props) => (
+            <TextField
+              className={classes.input}
+              fullWidth
+              label="Password"
+              type="password"
+              required
+              variant="outlined"
+              value={props.value}
+              onChange={props.onChange}
+              inputRef={props.ref}
+            />
+          )}
         />
         {errors.password && <div>{errors.password.message}</div>}
       </div>
       <div>
-        <label htmlFor="email">Email address</label>
-        <div>
-          <input
-            id="email"
-            type="email"
-            name="email"
-            ref={register({
-              required: "Please enter an email",
-              pattern: {
-                value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                message: "Not a valid email",
-              },
-            })}
-          />
-          {errors.email && <div>{errors.email.message}</div>}
-        </div>
-      </div>
-      <div>
-        <label htmlFor="password">Password</label>
-        <div>
-          <input
-            id="password"
-            type="password"
-            name="password"
-            ref={register({
-              required: "Please enter a password",
-              minLength: {
-                value: 6,
-                message: "Should have at least 6 characters",
-              },
-            })}
-          />
-          {errors.password && <div>{errors.password.message}</div>}
-        </div>
-      </div>
-      <div>
         <span>
-          <button type="submit">Sign up</button>
+          <Button className={classes.button} type="submit" variant="outlined">
+            Sign up
+          </Button>
         </span>
       </div>
     </form>
