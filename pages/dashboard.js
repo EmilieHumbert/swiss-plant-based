@@ -1,8 +1,10 @@
+import Head from "next/head";
+
 import { useRequireAuth } from "../hooks/useRequireAuth";
 
 import { Button, Container } from "@material-ui/core";
 
-const DashBoardPage = () => {
+const DashboardPage = () => {
   const auth = useRequireAuth();
   if (!auth.user) return null;
   return (
@@ -22,4 +24,4 @@ const DashBoardPage = () => {
   );
 };
 
-export default DashBoardPage;
+export default DashboardPage;
