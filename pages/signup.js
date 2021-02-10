@@ -6,14 +6,20 @@ import Container from "@material-ui/core/Container";
 export default function signUpPage() {
   return (
     <Container maxWidth={"xs"}>
-      <h2>Sign up</h2>
-      <p>
-        Already have an account?
-        <Link href="/login">
-          <a href="#">Log In</a>
-        </Link>
-      </p>
-      <SignUpForm />
+      <Head>
+        <title>Signup page</title>
+      </Head>
+      
+      <main>
+        <h2>Sign up</h2>
+        <p>
+          Already have an account?
+          <Link href="/login">
+            <a href="#">Log In</a>
+          </Link>
+        </p>
+        <SignUpForm />
+      </main>
     </Container>
   );
 }

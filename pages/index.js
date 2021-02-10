@@ -1,17 +1,18 @@
 import Head from "next/head";
 import Link from "next/link";
 
+import { Container } from "@material-ui/core";
+
 export default function Home() {
   return (
-    <div>
+    <Container maxWidth={"md"}>
       <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>Recipe home page</title>
       </Head>
 
       <main>
         <Link href="/recipes">Recipes</Link>
       </main>
-    </div>
+    </Container>
   );
 }

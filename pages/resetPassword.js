@@ -1,10 +1,17 @@
 import Link from "next/link";
+
 import ResetPasswordForm from "../components/forms/resetPasswordForm";
+
+import Container from "@material-ui/core/Container";
 
 export default function ResetPasswordPage() {
   return (
-    <div>
-      <div>
+    <Container maxWidth={"xs"}>
+      <Head>
+        <title>Reset password page</title>
+      </Head>
+      
+      <main>
         <h2>Reset password</h2>
         <p>
           {"Didn't forget? "}
@@ -12,10 +19,9 @@ export default function ResetPasswordPage() {
             <a href="#">Login</a>
           </Link>
         </p>
-      </div>
-      <div>
+
         <ResetPasswordForm />
-      </div>
-    </div>
+      </main>
+    </Container>
   );
 }
