@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Head from "next/head";
+
 import SignUpForm from "../components/forms/signUpForm";
 
 import Container from "@material-ui/core/Container";
@@ -9,7 +11,7 @@ export default function signUpPage() {
       <Head>
         <title>Signup page</title>
       </Head>
-      
+
       <main>
         <h2>Sign up</h2>
         <p>

@@ -1,4 +1,6 @@
+import Head from "next/head";
 import Link from "next/link";
+
 import LoginForm from "../components/forms/loginForm";
 
 import Container from "@material-ui/core/Container";

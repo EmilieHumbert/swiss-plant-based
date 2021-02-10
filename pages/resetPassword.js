@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Head from "next/head";
 
 import ResetPasswordForm from "../components/forms/resetPasswordForm";
 
