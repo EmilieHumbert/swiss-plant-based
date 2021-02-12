@@ -21,7 +21,7 @@ export default function Profile() {
   const auth = useRequireAuth();
   const classes = useStyles();
 
-  return (
+  return auth.loading || !auth.user ? null : (
     <div className={classes.root}>
       <Grid container spacing={3}>
         <Grid item xs={6}>

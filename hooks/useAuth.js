@@ -15,6 +15,7 @@ export const useAuth = () => {
 
 const useAuthProvider = () => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const createUser = (user) => {
     return db
@@ -72,6 +73,7 @@ const useAuthProvider = () => {
     if (user) {
       getUserAdditionalData(user);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -101,5 +103,5 @@ const useAuthProvider = () => {
     });
   };
 
-  return { user, signUp, signIn, signOut, sendPasswordResetEmail };
+  return { loading, user, signUp, signIn, signOut, sendPasswordResetEmail };
 };
