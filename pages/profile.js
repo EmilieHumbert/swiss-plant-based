@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
   image: {
     borderRadius: "50%",
   },
+  nameTitle: {
+    marginBottom: 0,
+  },
   yourRecipes: { marginTop: theme.spacing(6) },
   savedRecipes: { marginTop: theme.spacing(6) },
 }));
@@ -41,7 +44,9 @@ export default function Profile() {
           />
         </Grid>
         <Grid item xs={9}>
-          <h1 margin-bottom='0'>{auth.user.name}</h1>
+          <h1 className={classes.nameTitle} margin-bottom="0">
+            {auth.user.name}
+          </h1>
           <Box display="flex" flexDirection="row" alignItems="center">
             <LocationOnIcon />
             <p>the world</p>
