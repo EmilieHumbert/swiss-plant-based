@@ -44,7 +44,7 @@ export default function Profile() {
           />
         </Grid>
         <Grid item xs={9}>
-          <h1 className={classes.nameTitle} margin-bottom="0">
+          <h1 className={classes.nameTitle}>
             {auth.user.name}
           </h1>
           <Box display="flex" flexDirection="row" alignItems="center">
