@@ -50,7 +50,9 @@ export default function Navigation() {
             </Link>
           </Typography>
           <Button>
-            <PersonIcon />
+            <Link href="/settings">
+              <PersonIcon />
+            </Link>
           </Button>
           <Button
             className={classes.button}
