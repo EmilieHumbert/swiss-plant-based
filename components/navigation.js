@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from "next/link";
 
 import { useAuth } from "../hooks/useAuth";
 
@@ -9,6 +9,7 @@ import {
   Toolbar,
   Typography,
 } from "@material-ui/core";
+import PersonIcon from "@material-ui/icons/Person";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,9 +18,9 @@ const useStyles = makeStyles((theme) => ({
   button: {
     color: "#33691e",
   },
-  link:{
+  link: {
     color: "#33691e",
-    textDecoration: 'none',
+    textDecoration: "none",
   },
   menuBar: {
     backgroundColor: "#dcedc8",
@@ -42,10 +43,15 @@ export default function Navigation() {
       <AppBar position="static" className={classes.menuBar}>
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            <Link  href="/">
-              <a className={classes.link} href="#">Home</a>
+            <Link href="/">
+              <a className={classes.link} href="#">
+                Home
+              </a>
             </Link>
           </Typography>
+          <Button>
+            <PersonIcon />
+          </Button>
           <Button
             className={classes.button}
             onClick={() => auth.signOut()}
