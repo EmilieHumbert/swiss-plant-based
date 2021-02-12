@@ -10,11 +10,12 @@ import LocationOnIcon from "@material-ui/icons/LocationOn";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    border: "1px solid #dcedc8",
+    border: "1px solid #bdbdbd",
     backgroundColor: "#f5f5f5",
     flexGrow: 1,
     marginTop: theme.spacing(6),
-    padding: theme.spacing(2),
+    paddingBottom: theme.spacing(6),
+    paddingTop: theme.spacing(6),
   },
   image: {
     borderRadius: "50%",
