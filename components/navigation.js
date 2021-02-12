@@ -5,6 +5,7 @@ import { useAuth } from "../hooks/useAuth";
 import {
   AppBar,
   Button,
+  Container,
   makeStyles,
   Toolbar,
   Typography,
@@ -14,6 +15,7 @@ import PersonIcon from "@material-ui/icons/Person";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    padding:0,
   },
   button: {
     color: "#33691e",
@@ -23,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "none",
   },
   menuBar: {
-    backgroundColor: "#dcedc8",
+    backgroundColor: "#f1f8e9",
     color: "#33691e",
   },
   menuButton: {
@@ -39,7 +41,7 @@ export default function Navigation() {
   const auth = useAuth();
 
   return (
-    <div className={classes.root}>
+    <Container className={classes.root} maxWidth={"md"}>
       <AppBar position="static" className={classes.menuBar}>
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
@@ -63,6 +65,6 @@ export default function Navigation() {
           </Button>
         </Toolbar>
       </AppBar>
-    </div>
+    </Container>
   );
 }
