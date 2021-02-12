@@ -58,7 +58,7 @@ export default function SignUpForm() {
 
   const onSubmit = (data) => {
     return signUp(data).then((user) => {
-      router.push("/dashboard");
+      router.push("/");
       console.log(user);
     });
   };

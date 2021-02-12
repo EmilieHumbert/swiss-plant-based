@@ -41,7 +41,7 @@ export default function LoginForm() {
     setError(null);
     return auth.signIn(data).then((response) => {
       setIsLoading(false);
-      response.error ? setError(response.error) : router.push("/dashboard");
+      response.error ? setError(response.error) : router.push("/");
     });
   };
 
