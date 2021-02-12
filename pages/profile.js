@@ -1,9 +1,12 @@
+import React from "react";
 import Image from "next/image";
 
 import { useRequireAuth } from "../hooks/useRequireAuth";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, Container, Grid } from "@material-ui/core";
+
+import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,11 +43,16 @@ export default function Profile() {
           <h1>{auth.user.name}</h1>
         </Grid>
         <Grid item xs={12} className={classes.yourRecipes}>
-          <h2>Your recipes</h2>
-          <Button>ADD</Button>
+          <h2>
+            Your recipes
+            <Button>
+              <AddCircleOutlineIcon />
+            </Button>
+          </h2>
+
           {/* add list of recipes created by user */}
         </Grid>
-        <Grid item xs={12} className={classes.savedRecipes}>
+        <Grid item xs={12}>
           <h2>Saved recipes</h2>
           {/* add list of recipes saved by user*/}
         </Grid>
