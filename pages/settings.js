@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import { useRequireAuth } from "../hooks/useRequireAuth";
 
-import { Box, Button, Container, Grid, makeStyles } from "@material-ui/core";
+import { Box, Container, Grid, makeStyles } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import IconButton from "@material-ui/core/IconButton";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
@@ -42,6 +42,20 @@ const useStyles = makeStyles((theme) => ({
     top: "-10px",
     right: "15px",
   },
+  emailContainer: {
+    width: "300px",
+    position: "relative",
+    "&:hover .edit-button-email": {
+      display: "block",
+      backgroundColor: "none",
+    },
+  },
+  editEmail: {
+    display: "none",
+    position: "absolute",
+    top: "-20px",
+    right: "30px",
+  },
 }));
 
 export default function Settings() {
@@ -76,7 +90,14 @@ export default function Settings() {
               <EditIcon fontSize="small" />
             </IconButton>
           </Box>
-          <p>{auth.user.email}</p>
+          <Box className={classes.emailContainer}>
+            <p>{auth.user.email}</p>
+            <IconButton
+              className={classNames("edit-button-email", classes.editEmail)}
+            >
+              <EditIcon fontSize="small" />
+            </IconButton>
+          </Box>
           <Box display="flex" flexDirection="row" alignItems="center">
             <LocationOnIcon />
             <p>the world</p>
