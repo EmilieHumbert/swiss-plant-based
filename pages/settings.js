@@ -56,6 +56,20 @@ const useStyles = makeStyles((theme) => ({
     top: "-20px",
     right: "30px",
   },
+  locationContainer: {
+    width: "150px",
+    position: "relative",
+    "&:hover .edit-button-location": {
+      display: "block",
+      backgroundColor: "none",
+    },
+  },
+  editLocation: {
+    display: "none",
+    position: "absolute",
+    top: "-5px",
+    right: "5px",
+  },
 }));
 
 export default function Settings() {
@@ -98,9 +112,22 @@ export default function Settings() {
               <EditIcon fontSize="small" />
             </IconButton>
           </Box>
-          <Box display="flex" flexDirection="row" alignItems="center">
-            <LocationOnIcon />
+          <Box
+            className={classes.locationContainer}
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+          >
+            <LocationOnIcon fontSize="small" />
             <p>the world</p>
+            <IconButton
+              className={classNames(
+                "edit-button-location",
+                classes.editLocation
+              )}
+            >
+              <EditIcon fontSize="small" />
+            </IconButton>
           </Box>
         </Grid>
       </Grid>
