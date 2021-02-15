@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     "&:hover .edit-button": {
       display: "block",
+      backgroundColor: "white",
     },
   },
   editImage: {
