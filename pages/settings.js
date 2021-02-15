@@ -4,6 +4,7 @@ import { useRequireAuth } from "../hooks/useRequireAuth";
 
 import { Box, Button, Container, Grid, makeStyles } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
+import IconButton from "@material-ui/core/IconButton";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 
 import classNames from "classnames";
@@ -16,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   imageContainer: {
     width: "150px",
     position: "relative",
-    "&:hover .edit-button": {
+    "&:hover .edit-button-image": {
       display: "block",
       backgroundColor: "white",
     },
@@ -24,9 +25,22 @@ const useStyles = makeStyles((theme) => ({
   editImage: {
     display: "none",
     position: "absolute",
-    top: "0",
-    right: "0",
-    backgroundColor: "white",
+    top: "-10px",
+    right: "-5px",
+  },
+  titleContainer: {
+    width: "300px",
+    position: "relative",
+    "&:hover .edit-button-title": {
+      display: "block",
+      backgroundColor: "none",
+    },
+  },
+  editTitle: {
+    display: "none",
+    position: "absolute",
+    top: "-10px",
+    right: "15px",
   },
 }));
 
@@ -46,13 +60,22 @@ export default function Settings() {
               width={150}
               height={150}
             />
-            <Button className={classNames("edit-button", classes.editImage)}>
-              <EditIcon />
-            </Button>
+            <IconButton
+              className={classNames("edit-button-image", classes.editImage)}
+            >
+              <EditIcon fontSize="small" />
+            </IconButton>
           </Box>
         </Grid>
         <Grid item xs={9}>
-          <h1 className={classes.nameTitle}>{auth.user.name}</h1>
+          <Box className={classes.titleContainer}>
+            <h1 className={classes.nameTitle}>{auth.user.name}</h1>
+            <IconButton
+              className={classNames("edit-button-title", classes.editTitle)}
+            >
+              <EditIcon fontSize="small" />
+            </IconButton>
+          </Box>
           <p>{auth.user.email}</p>
           <Box display="flex" flexDirection="row" alignItems="center">
             <LocationOnIcon />
