@@ -1,11 +1,20 @@
+import { useState } from "react";
 import Image from "next/image";
 
 import { useRequireAuth } from "../hooks/useRequireAuth";
 
-import { Box, Container, Grid, makeStyles } from "@material-ui/core";
+import {
+  Box,
+  Container,
+  Grid,
+  IconButton,
+  makeStyles,
+  TextField,
+} from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
-import IconButton from "@material-ui/core/IconButton";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
+import DoneIcon from "@material-ui/icons/Done";
+import ClearIcon from "@material-ui/icons/Clear";
 
 import classNames from "classnames";
 
@@ -29,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     right: "-5px",
   },
   titleContainer: {
-    width: "300px",
+    width: "350px",
     position: "relative",
     "&:hover .edit-button-title": {
       display: "block",
@@ -40,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     display: "none",
     position: "absolute",
     top: "-10px",
-    right: "15px",
+    right: "55px",
   },
   emailContainer: {
     width: "300px",
@@ -75,6 +84,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Settings() {
   const auth = useRequireAuth();
   const classes = useStyles();
+  const [editTitle, setEditTitle] = useState(false);
 
   return auth.loading || !auth.user ? null : (
     <Container className={classes.root} maxWidth={"md"} spacing={3}>
@@ -97,12 +107,38 @@ export default function Settings() {
         </Grid>
         <Grid item xs={9}>
           <Box className={classes.titleContainer}>
-            <h1 className={classes.nameTitle}>{auth.user.name}</h1>
-            <IconButton
-              className={classNames("edit-button-title", classes.editTitle)}
-            >
-              <EditIcon fontSize="small" />
-            </IconButton>
+            {editTitle ? (
+              <>
+                <TextField label="Name" />
+                <IconButton
+                  onClick={() => {
+                    console.log("new title");
+                  }}
+                >
+                  <DoneIcon fontSize="small" />
+                </IconButton>
+                <IconButton
+                  onClick={() => {
+                    setEditTitle(false);
+                  }}
+                >
+                  <ClearIcon fontSize="small" />
+                </IconButton>
+              </>
+            ) : (
+              <>
+                <h1 className={classes.nameTitle}>{auth.user.name}</h1>
+                <IconButton
+                  className={classNames("edit-button-title", classes.editTitle)}
+                  onClick={() => {
+                    setEditTitle(true);
+                    console.log(editTitle);
+                  }}
+                >
+                  <EditIcon fontSize="small" />
+                </IconButton>
+              </>
+            )}
           </Box>
           <Box className={classes.emailContainer}>
             <p>{auth.user.email}</p>
