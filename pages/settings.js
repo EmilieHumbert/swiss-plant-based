@@ -1,7 +1,9 @@
 import { useState } from "react";
 import Image from "next/image";
+import { useForm } from "react-hook-form";
 
 import { useRequireAuth } from "../hooks/useRequireAuth";
+import { db } from "../config/fire.config";
 
 import {
   Box,
@@ -85,6 +87,17 @@ export default function Settings() {
   const auth = useRequireAuth();
   const classes = useStyles();
   const [editTitle, setEditTitle] = useState(false);
+  const [name, setName] = useState("");
+  const { handleSubmit, setValue } = useForm();
+
+  const onSubmit = (data, e) => {
+    db.collection("users").doc(auth.user.uid).update({ name: name });
+    setEditTitle(false);
+  };
+
+  const handleChange = (e) => {
+    setName(e.target.value);
+  };
 
   return auth.loading || !auth.user ? null : (
     <Container className={classes.root} maxWidth={"md"} spacing={3}>
@@ -108,13 +121,14 @@ export default function Settings() {
         <Grid item xs={9}>
           <Box className={classes.titleContainer}>
             {editTitle ? (
-              <>
-                <TextField label="Name" />
-                <IconButton
-                  onClick={() => {
-                    console.log("new title");
-                  }}
-                >
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <TextField
+                  name="name"
+                  type="text"
+                  variant="outlined"
+                  onChange={handleChange}
+                />
+                <IconButton type="submit">
                   <DoneIcon fontSize="small" />
                 </IconButton>
                 <IconButton
@@ -124,7 +138,7 @@ export default function Settings() {
                 >
                   <ClearIcon fontSize="small" />
                 </IconButton>
-              </>
+              </form>
             ) : (
               <>
                 <h1 className={classes.nameTitle}>{auth.user.name}</h1>
