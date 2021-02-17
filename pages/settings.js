@@ -87,16 +87,27 @@ export default function Settings() {
   const auth = useRequireAuth();
   const classes = useStyles();
   const [editTitle, setEditTitle] = useState(false);
+  const [editEmail, setEditEmail] = useState(false);
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const { handleSubmit, setValue } = useForm();
 
-  const onSubmit = (data, e) => {
+  const onSubmitName = (data, e) => {
     db.collection("users").doc(auth.user.uid).update({ name: name });
     setEditTitle(false);
   };
 
-  const handleChange = (e) => {
+  const handleChangeName = (e) => {
     setName(e.target.value);
+  };
+
+  const onSubmitEmail = (data, e) => {
+    db.collection("users").doc(auth.user.uid).update({ email: email });
+    setEditEmail(false);
+  };
+
+  const handleChangeEmail = (e) => {
+    setEmail(e.target.value);
   };
 
   return auth.loading || !auth.user ? null : (
@@ -121,12 +132,12 @@ export default function Settings() {
         <Grid item xs={9}>
           <Box className={classes.titleContainer}>
             {editTitle ? (
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <form onSubmit={handleSubmit(onSubmitName)}>
                 <TextField
                   name="name"
                   type="text"
                   variant="outlined"
-                  onChange={handleChange}
+                  onChange={handleChangeName}
                 />
                 <IconButton type="submit">
                   <DoneIcon fontSize="small" />
@@ -146,7 +157,6 @@ export default function Settings() {
                   className={classNames("edit-button-title", classes.editTitle)}
                   onClick={() => {
                     setEditTitle(true);
-                    console.log(editTitle);
                   }}
                 >
                   <EditIcon fontSize="small" />
@@ -155,12 +165,38 @@ export default function Settings() {
             )}
           </Box>
           <Box className={classes.emailContainer}>
-            <p>{auth.user.email}</p>
-            <IconButton
-              className={classNames("edit-button-email", classes.editEmail)}
-            >
-              <EditIcon fontSize="small" />
-            </IconButton>
+            {editEmail ? (
+              <form onSubmit={handleSubmit(onSubmitEmail)}>
+                <TextField
+                  name="email"
+                  type="text"
+                  variant="outlined"
+                  onChange={handleChangeEmail}
+                />
+                <IconButton type="submit">
+                  <DoneIcon fontSize="small" />
+                </IconButton>
+                <IconButton
+                  onClick={() => {
+                    setEditEmail(false);
+                  }}
+                >
+                  <ClearIcon fontSize="small" />
+                </IconButton>
+              </form>
+            ) : (
+              <>
+                <p>{auth.user.email}</p>
+                <IconButton
+                  className={classNames("edit-button-email", classes.editEmail)}
+                  onClick={() => {
+                    setEditEmail(true);
+                  }}
+                >
+                  <EditIcon fontSize="small" />
+                </IconButton>
+              </>
+            )}
           </Box>
           <Box
             className={classes.locationContainer}
