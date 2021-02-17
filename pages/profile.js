@@ -49,7 +49,7 @@ export default function Profile() {
           </h1>
           <Box display="flex" flexDirection="row" alignItems="center">
             <LocationOnIcon />
-            <p>the world</p>
+            <p>{auth.user.location}</p>
           </Box>
         </Grid>
         <Grid item xs={12} className={classes.yourRecipes}>
