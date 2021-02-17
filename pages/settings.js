@@ -88,8 +88,10 @@ export default function Settings() {
   const classes = useStyles();
   const [editTitle, setEditTitle] = useState(false);
   const [editEmail, setEditEmail] = useState(false);
+  const [editLocation, setEditLocation] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [location, setLocation] = useState("");
   const { handleSubmit, setValue } = useForm();
 
   const onSubmitName = (data, e) => {
@@ -108,6 +110,17 @@ export default function Settings() {
 
   const handleChangeEmail = (e) => {
     setEmail(e.target.value);
+  };
+
+  const onSubmitLocation = (data, e) => {
+    db.collection("users")
+      .doc(auth.user.uid)
+      .set({ location: location }, { merge: true });
+    setEditLocation(false);
+  };
+
+  const handleChangeLocation = (e) => {
+    setLocation(e.target.value);
   };
 
   return auth.loading || !auth.user ? null : (
@@ -204,16 +217,42 @@ export default function Settings() {
             flexDirection="row"
             alignItems="center"
           >
-            <LocationOnIcon fontSize="small" />
-            <p>the world</p>
-            <IconButton
-              className={classNames(
-                "edit-button-location",
-                classes.editLocation
-              )}
-            >
-              <EditIcon fontSize="small" />
-            </IconButton>
+            {editLocation ? (
+              <form onSubmit={handleSubmit(onSubmitLocation)}>
+                <TextField
+                  name="email"
+                  type="text"
+                  variant="outlined"
+                  onChange={handleChangeLocation}
+                />
+                <IconButton type="submit">
+                  <DoneIcon fontSize="small" />
+                </IconButton>
+                <IconButton
+                  onClick={() => {
+                    setEditLocation(false);
+                  }}
+                >
+                  <ClearIcon fontSize="small" />
+                </IconButton>
+              </form>
+            ) : (
+              <>
+                <LocationOnIcon fontSize="small" />
+                <p>{auth.user.location}</p>
+                <IconButton
+                  className={classNames(
+                    "edit-button-location",
+                    classes.editLocation
+                  )}
+                  onClick={() => {
+                    setEditLocation(true);
+                  }}
+                >
+                  <EditIcon fontSize="small" />
+                </IconButton>
+              </>
+            )}
           </Box>
         </Grid>
       </Grid>
