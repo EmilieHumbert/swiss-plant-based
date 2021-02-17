@@ -7,9 +7,11 @@ import { db } from "../config/fire.config";
 
 import {
   Box,
+  Button,
   Container,
   Grid,
   IconButton,
+  Input,
   makeStyles,
   TextField,
 } from "@material-ui/core";
@@ -86,9 +88,11 @@ const useStyles = makeStyles((theme) => ({
 export default function Settings() {
   const auth = useRequireAuth();
   const classes = useStyles();
+  const [editImage, setEditImage] = useState(false);
   const [editTitle, setEditTitle] = useState(false);
   const [editEmail, setEditEmail] = useState(false);
   const [editLocation, setEditLocation] = useState(false);
+  const [image, setImage] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [location, setLocation] = useState("");
@@ -123,23 +127,59 @@ export default function Settings() {
     setLocation(e.target.value);
   };
 
+  const onSubmitImage = (data, e) => {
+    db.collection("users")
+      .doc(auth.user.uid)
+      .set({ imageProfile: image }, { merge: true });
+    setEditImage(false);
+  };
+
+  const handleChangeImage = (e) => {
+    console.log();
+    setImage(e.target.value);
+  };
+
   return auth.loading || !auth.user ? null : (
     <Container className={classes.root} maxWidth={"md"} spacing={3}>
       <h1>My Profile</h1>
       <Grid container>
         <Grid item xs={3}>
           <Box className={classes.imageContainer}>
-            <Image
-              src="/images/profile_picture.jpg"
-              alt="Profile picture"
-              width={150}
-              height={150}
-            />
-            <IconButton
-              className={classNames("edit-button-image", classes.editImage)}
-            >
-              <EditIcon fontSize="small" />
-            </IconButton>
+            {editImage ? (
+              <form onSubmit={handleSubmit(onSubmitImage)}>
+                <Button>
+                  Upload file
+                  <input type="file" onChange={handleChangeImage} />
+                </Button>
+                <IconButton type="submit">
+                  <DoneIcon fontSize="small" />
+                </IconButton>
+                <IconButton
+                  onClick={() => {
+                    setEditImage(false);
+                  }}
+                >
+                  <ClearIcon fontSize="small" />
+                </IconButton>
+              </form>
+            ) : (
+              <>
+                <Image
+                  src="/images/profile_picture.jpg"
+                  alt="Profile picture"
+                  width={150}
+                  height={150}
+                />
+                <IconButton
+                  className={classNames("edit-button-image", classes.editImage)}
+                  onClick={() => {
+                    setEditImage(true);
+                  }}
+                >
+                  <EditIcon fontSize="small" />
+                </IconButton>
+              </>
+            )}
           </Box>
         </Grid>
         <Grid item xs={9}>
