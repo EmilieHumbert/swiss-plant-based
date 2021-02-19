@@ -1,24 +1,18 @@
 import { useState } from "react";
 import Image from "next/image";
-import { useForm } from "react-hook-form";
 
 import { useRequireAuth } from "../hooks/useRequireAuth";
-import { db } from "../config/fire.config";
+
+import SettingsForm from "../components/forms/settingsForm";
 
 import {
   Box,
-  Button,
   Container,
   Grid,
   IconButton,
-  Input,
   makeStyles,
-  TextField,
 } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
-import LocationOnIcon from "@material-ui/icons/LocationOn";
-import DoneIcon from "@material-ui/icons/Done";
-import ClearIcon from "@material-ui/icons/Clear";
 
 import classNames from "classnames";
 
@@ -88,56 +82,8 @@ const useStyles = makeStyles((theme) => ({
 export default function Settings() {
   const auth = useRequireAuth();
   const classes = useStyles();
-  const [editImage, setEditImage] = useState(false);
-  const [editTitle, setEditTitle] = useState(false);
-  const [editEmail, setEditEmail] = useState(false);
-  const [editLocation, setEditLocation] = useState(false);
-  const [image, setImage] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [location, setLocation] = useState("");
-  const { handleSubmit, setValue } = useForm();
 
-  const onSubmitName = (data, e) => {
-    db.collection("users").doc(auth.user.uid).update({ name: name });
-    setEditTitle(false);
-  };
-
-  const handleChangeName = (e) => {
-    setName(e.target.value);
-  };
-
-  const onSubmitEmail = (data, e) => {
-    db.collection("users").doc(auth.user.uid).update({ email: email });
-    setEditEmail(false);
-  };
-
-  const handleChangeEmail = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const onSubmitLocation = (data, e) => {
-    db.collection("users")
-      .doc(auth.user.uid)
-      .set({ location: location }, { merge: true });
-    setEditLocation(false);
-  };
-
-  const handleChangeLocation = (e) => {
-    setLocation(e.target.value);
-  };
-
-  const onSubmitImage = (data, e) => {
-    db.collection("users")
-      .doc(auth.user.uid)
-      .set({ imageProfile: image }, { merge: true });
-    setEditImage(false);
-  };
-
-  const handleChangeImage = (e) => {
-    console.log();
-    setImage(e.target.value);
-  };
+  const [editName, setEditName] = useState(false);
 
   return auth.loading || !auth.user ? null : (
     <Container className={classes.root} maxWidth={"md"} spacing={3}>
@@ -145,79 +91,53 @@ export default function Settings() {
       <Grid container>
         <Grid item xs={3}>
           <Box className={classes.imageContainer}>
-            {editImage ? (
-              <form onSubmit={handleSubmit(onSubmitImage)}>
-                <Button>
-                  Upload file
-                  <input type="file" onChange={handleChangeImage} />
-                </Button>
-                <IconButton type="submit">
-                  <DoneIcon fontSize="small" />
-                </IconButton>
-                <IconButton
-                  onClick={() => {
-                    setEditImage(false);
-                  }}
-                >
-                  <ClearIcon fontSize="small" />
-                </IconButton>
-              </form>
-            ) : (
-              <>
-                <Image
-                  src="/images/profile_picture.jpg"
-                  alt="Profile picture"
-                  width={150}
-                  height={150}
-                />
-                <IconButton
-                  className={classNames("edit-button-image", classes.editImage)}
-                  onClick={() => {
-                    setEditImage(true);
-                  }}
-                >
-                  <EditIcon fontSize="small" />
-                </IconButton>
-              </>
-            )}
+            <>
+              <Image
+                src="/images/profile_picture.jpg"
+                alt="Profile picture"
+                width={150}
+                height={150}
+              />
+              <IconButton
+                className={classNames("edit-button-image", classes.editImage)}
+                onClick={() => {
+                  setEditImage(true);
+                }}
+              >
+                <EditIcon fontSize="small" />
+              </IconButton>
+            </>
           </Box>
         </Grid>
         <Grid item xs={9}>
           <Box className={classes.titleContainer}>
-            {editTitle ? (
-              <form onSubmit={handleSubmit(onSubmitName)}>
-                <TextField
-                  name="name"
-                  type="text"
-                  variant="outlined"
-                  onChange={handleChangeName}
-                />
-                <IconButton type="submit">
-                  <DoneIcon fontSize="small" />
-                </IconButton>
-                <IconButton
-                  onClick={() => {
-                    setEditTitle(false);
-                  }}
-                >
-                  <ClearIcon fontSize="small" />
-                </IconButton>
-              </form>
+            {editName ? (
+              <SettingsForm
+                cancel={() => setEditName(false)}
+                defaultValue={auth.user.name}
+                field="name"
+                label="Name"
+                rules={{
+                  required: "Please enter your name",
+                }}
+                submit={(data) => {
+                  auth.updateUser({ data, uid: auth.user.uid });
+                  setEditName(false);
+                }}
+              />
             ) : (
               <>
                 <h1 className={classes.nameTitle}>{auth.user.name}</h1>
                 <IconButton
                   className={classNames("edit-button-title", classes.editTitle)}
-                  onClick={() => {
-                    setEditTitle(true);
-                  }}
+                  onClick={() => setEditName(true)}
                 >
                   <EditIcon fontSize="small" />
                 </IconButton>
               </>
             )}
           </Box>
-          <Box className={classes.emailContainer}>
+          {/* <Box className={classes.emailContainer}>
             {editEmail ? (
               <form onSubmit={handleSubmit(onSubmitEmail)}>
                 <TextField
@@ -292,8 +212,8 @@ export default function Settings() {
                   <EditIcon fontSize="small" />
                 </IconButton>
               </>
-            )}
-          </Box>
+            )} */}
+          {/* </Box> */}
         </Grid>
       </Grid>
     </Container>
