@@ -16,6 +16,7 @@ export const useAuth = () => {
 const useAuthProvider = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const globalUser = user;
 
   const createUser = (user) => {
     return db
@@ -25,18 +26,6 @@ const useAuthProvider = () => {
       .then(() => {
         setUser(user);
         return user;
-      })
-      .catch((error) => {
-        return { error };
-      });
-  };
-
-  const signUp = ({ name, email, password }) => {
-    return auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((response) => {
-        auth.currentUser.sendEmailVerification();
-        return createUser({ uid: response.user.uid, email, name });
       })
       .catch((error) => {
         return { error };
@@ -55,6 +44,31 @@ const useAuthProvider = () => {
       });
   };
 
+  const updateUser = ({ data, uid }) => {
+    return db
+      .collection("users")
+      .doc(uid)
+      .update(data)
+      .then(() => {
+        setUser({
+          ...user,
+          ...data,
+        });
+      });
+  };
+
+  const signUp = ({ name, email, password }) => {
+    return auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((response) => {
+        auth.currentUser.sendEmailVerification();
+        return createUser({ uid: response.user.uid, email, name });
+      })
+      .catch((error) => {
+        return { error };
+      });
+  };
+
   const signIn = ({ email, password }) => {
     return auth
       .signInWithEmailAndPassword(email, password)
@@ -66,6 +80,16 @@ const useAuthProvider = () => {
       .catch((error) => {
         return { error };
       });
+  };
+
+  const signOut = () => {
+    return auth.signOut().then(() => setUser(false));
+  };
+
+  const sendPasswordResetEmail = (email) => {
+    return auth.sendPasswordResetEmail(email).then((response) => {
+      return response;
+    });
   };
 
   const handleAuthStateChanged = (user) => {
@@ -93,15 +117,13 @@ const useAuthProvider = () => {
     }
   }, []);
 
-  const signOut = () => {
-    return auth.signOut().then(() => setUser(false));
+  return {
+    loading,
+    user,
+    signUp,
+    signIn,
+    signOut,
+    sendPasswordResetEmail,
+    updateUser,
   };
-
-  const sendPasswordResetEmail = (email) => {
-    return auth.sendPasswordResetEmail(email).then((response) => {
-      return response;
-    });
-  };
-
-  return { loading, user, signUp, signIn, signOut, sendPasswordResetEmail };
 };
