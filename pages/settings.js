@@ -2,7 +2,6 @@ import { useState } from "react";
 import Image from "next/image";
 
 import { useRequireAuth } from "../hooks/useRequireAuth";
-
 import SettingsForm from "../components/forms/settingsForm";
 
 import {
@@ -13,6 +12,7 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
+import LocationOnIcon from "@material-ui/icons/LocationOn";
 
 import classNames from "classnames";
 
@@ -84,6 +84,9 @@ export default function Settings() {
   const classes = useStyles();
 
   const [editName, setEditName] = useState(false);
+  const [editLocation, setEditLocation] = useState(false);
+  const capitalizedLocation =
+    auth.user.location.charAt(0).toUpperCase() + auth.user.location.slice(1);
 
   return auth.loading || !auth.user ? null : (
     <Container className={classes.root} maxWidth={"md"} spacing={3}>
@@ -170,7 +173,7 @@ export default function Settings() {
                 </IconButton>
               </>
             )}
-          </Box>
+          </Box> */}
           <Box
             className={classes.locationContainer}
             display="flex"
@@ -178,42 +181,35 @@ export default function Settings() {
             alignItems="center"
           >
             {editLocation ? (
-              <form onSubmit={handleSubmit(onSubmitLocation)}>
-                <TextField
-                  name="email"
-                  type="text"
-                  variant="outlined"
-                  onChange={handleChangeLocation}
-                />
-                <IconButton type="submit">
-                  <DoneIcon fontSize="small" />
-                </IconButton>
-                <IconButton
-                  onClick={() => {
-                    setEditLocation(false);
-                  }}
-                >
-                  <ClearIcon fontSize="small" />
-                </IconButton>
-              </form>
+              <SettingsForm
+                cancel={() => setEditLocation(false)}
+                defaultValue={capitalizedLocation || "the world"}
+                field="location"
+                label="Location"
+                rules={{
+                  required: "Please enter your location",
+                }}
+                submit={(data) => {
+                  auth.updateUser({ data, uid: auth.user.uid });
+                  setEditLocation(false);
+                }}
+              />
             ) : (
               <>
                 <LocationOnIcon fontSize="small" />
-                <p>{auth.user.location}</p>
+                <p>{capitalizedLocation}</p>
                 <IconButton
                   className={classNames(
                     "edit-button-location",
                     classes.editLocation
                   )}
-                  onClick={() => {
-                    setEditLocation(true);
-                  }}
+                  onClick={() => setEditLocation(true)}
                 >
                   <EditIcon fontSize="small" />
                 </IconButton>
               </>
-            )} */}
-          {/* </Box> */}
+            )}
+          </Box>
         </Grid>
       </Grid>
     </Container>
