@@ -85,8 +85,7 @@ export default function Settings() {
 
   const [editName, setEditName] = useState(false);
   const [editLocation, setEditLocation] = useState(false);
-  const capitalizedLocation =
-    auth.user.location.charAt(0).toUpperCase() + auth.user.location.slice(1);
+  const [editEmail, setEditEmail] = useState(false);
 
   return auth.loading || !auth.user ? null : (
     <Container className={classes.root} maxWidth={"md"} spacing={3}>
@@ -140,40 +139,33 @@ export default function Settings() {
               </>
             )}
           </Box>
-          {/* <Box className={classes.emailContainer}>
+          <Box className={classes.emailContainer}>
             {editEmail ? (
-              <form onSubmit={handleSubmit(onSubmitEmail)}>
-                <TextField
-                  name="email"
-                  type="text"
-                  variant="outlined"
-                  onChange={handleChangeEmail}
-                />
-                <IconButton type="submit">
-                  <DoneIcon fontSize="small" />
-                </IconButton>
-                <IconButton
-                  onClick={() => {
-                    setEditEmail(false);
-                  }}
-                >
-                  <ClearIcon fontSize="small" />
-                </IconButton>
-              </form>
+              <SettingsForm
+                cancel={() => setEditEmail(false)}
+                defaultValue={auth.user.email}
+                field="email"
+                label="Email"
+                rules={{
+                  required: "Please enter your email",
+                }}
+                submit={(data) => {
+                  auth.updateUser({ data, uid: auth.user.uid });
+                  setEditEmail(false);
+                }}
+              />
             ) : (
               <>
                 <p>{auth.user.email}</p>
                 <IconButton
-                  className={classNames("edit-button-email", classes.editEmail)}
-                  onClick={() => {
-                    setEditEmail(true);
-                  }}
+                  className={classNames("edit-button-email", classes.editTitle)}
+                  onClick={() => setEditEmail(true)}
                 >
                   <EditIcon fontSize="small" />
                 </IconButton>
               </>
             )}
-          </Box> */}
+          </Box>
           <Box
             className={classes.locationContainer}
             display="flex"
@@ -183,7 +175,7 @@ export default function Settings() {
             {editLocation ? (
               <SettingsForm
                 cancel={() => setEditLocation(false)}
-                defaultValue={capitalizedLocation || "the world"}
+                defaultValue={auth.user.location}
                 field="location"
                 label="Location"
                 rules={{
@@ -197,7 +189,7 @@ export default function Settings() {
             ) : (
               <>
                 <LocationOnIcon fontSize="small" />
-                <p>{capitalizedLocation}</p>
+                <p>{auth.user.location}</p>
                 <IconButton
                   className={classNames(
                     "edit-button-location",
