@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
-import { auth, db } from "../config/fire.config";
+import { auth } from "../config/fire.config";
 
 const authContext = createContext({ user: {} });
 const { Provider } = authContext;
@@ -21,7 +21,7 @@ const useAuthProvider = () => {
     const response = await fetch(`/api/users`, {
       method: "POST",
       body: JSON.stringify(data),
-      });
+    });
 
     if (response.status === 200) {
       setUser({
@@ -98,16 +98,16 @@ const useAuthProvider = () => {
     return () => unsub();
   }, []);
 
-  useEffect(() => {
-    if (user?.uid) {
-      // Subscribe to user document on mount
-      const unsubscribe = db
-        .collection("users")
-        .doc(user.uid)
-        .onSnapshot((doc) => setUser(doc.data()));
-      return () => unsubscribe();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (user?.uid) {
+  //     // Subscribe to user document on mount
+  //     const unsubscribe = db
+  //       .collection("users")
+  //       .doc(user.uid)
+  //       .onSnapshot((doc) => setUser(doc.data()));
+  //     return () => unsubscribe();
+  //   }
+  // }, []);
 
   return {
     loading,
