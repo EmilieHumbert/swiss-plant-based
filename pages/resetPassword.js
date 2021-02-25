@@ -1,3 +1,5 @@
+import React from "react";
+
 import Link from "next/link";
 import Head from "next/head";
 
@@ -11,7 +13,7 @@ export default function ResetPasswordPage() {
       <Head>
         <title>Reset password page</title>
       </Head>
-      
+
       <main>
         <h2>Reset password</h2>
         <p>

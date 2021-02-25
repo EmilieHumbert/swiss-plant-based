@@ -1,3 +1,5 @@
+import React from "react";
+
 import Link from "next/link";
 
 import { useAuth } from "../hooks/useAuth";
@@ -15,7 +17,7 @@ import PersonIcon from "@material-ui/icons/Person";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    padding:0,
+    padding: 0,
   },
   button: {
     color: "#33691e",

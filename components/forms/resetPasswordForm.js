@@ -1,4 +1,4 @@
-import { Controller, useForm } from "react-hook-form";
+import React, { Controller, useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { useAuth } from "../../hooks/useAuth";
 
@@ -6,7 +6,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
 export default function ResetPasswordForm() {
-  const { control, register, errors, handleSubmit } = useForm({
+  const { control, errors, handleSubmit } = useForm({
     defaultValues: {
       email: "",
       password: "",

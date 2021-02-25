@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 
 import { useRequireAuth } from "../hooks/useRequireAuth";
@@ -103,7 +103,7 @@ export default function Settings() {
               <IconButton
                 className={classNames("edit-button-image", classes.editImage)}
                 onClick={() => {
-                  setEditImage(true);
+                  // setEditImage(true);
                 }}
               >
                 <EditIcon fontSize="small" />

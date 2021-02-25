@@ -1,3 +1,5 @@
+import React from "react";
+
 import RecipeDetails from "../components/recipeDetails";
 import RecipeIngredients from "../components/recipeIngredients";
 import RecipeInstructions from "../components/recipeInstructions";

@@ -1,3 +1,5 @@
+import React from "react";
+
 import Head from "next/head";
 import Link from "next/link";
 
@@ -17,7 +19,7 @@ export default function Home() {
       <main>
         {!auth.user ? (
           <>
-            <p>Don't have an account?</p>
+            <p>Don&apos;t have an account?</p>
             <Link href="/signup">
               <a href="#">Sign up</a>
             </Link>

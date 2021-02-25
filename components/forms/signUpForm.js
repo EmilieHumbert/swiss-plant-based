@@ -1,3 +1,4 @@
+import React from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import { useRouter } from "next/router";
@@ -57,9 +58,8 @@ export default function SignUpForm() {
   };
 
   const onSubmit = (data) => {
-    return signUp(data).then((user) => {
+    return signUp(data).then(() => {
       router.push("/");
-      console.log(user);
     });
   };
 

@@ -1,3 +1,5 @@
+import React from "react";
+
 import Head from "next/head";
 import Link from "next/link";
 
@@ -11,11 +13,11 @@ export default function logInPage() {
       <Head>
         <title>Login page</title>
       </Head>
-      
+
       <main>
         <div>
           <h2>Log in</h2>
-          <p>Don't have an account?</p>
+          <p>Don&apos;t have an account?</p>
           <Link href="/signup">
             <a href="#">Sign up</a>
           </Link>
