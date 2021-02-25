@@ -16,7 +16,6 @@ export const useAuth = () => {
 const useAuthProvider = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const globalUser = user;
 
   const createUser = (user) => {
     return db
@@ -32,29 +31,29 @@ const useAuthProvider = () => {
       });
   };
 
-  const getUserAdditionalData = (user) => {
-    return db
-      .collection("users")
-      .doc(user.uid)
-      .get()
-      .then((userData) => {
-        if (userData.data()) {
-          setUser(userData.data());
-        }
-      });
+  const getUserAdditionalData = async (user) => {
+    const response = await fetch(`/api/users/${user.uid}`);
+    const userData = await response.json();
+
+    if (userData) {
+      setUser(userData);
+    }
   };
 
-  const updateUser = ({ data, uid }) => {
-    return db
-      .collection("users")
-      .doc(uid)
-      .update(data)
-      .then(() => {
-        setUser({
-          ...user,
-          ...data,
-        });
+  const updateUser = async ({ data, uid }) => {
+    const response = await fetch(`/api/users/${uid}`, {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+
+    if (response.status === 200) {
+      setUser({
+        ...user,
+        ...data,
       });
+    } else {
+      console.error(response);
+    }
   };
 
   const signUp = ({ name, email, password }) => {
@@ -74,7 +73,7 @@ const useAuthProvider = () => {
       .signInWithEmailAndPassword(email, password)
       .then((response) => {
         setUser(response.user);
-        getUserAdditionalData;
+        getUserAdditionalData();
         return response.user;
       })
       .catch((error) => {
