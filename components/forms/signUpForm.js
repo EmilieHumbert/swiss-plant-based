@@ -3,7 +3,7 @@ import { Controller, useForm } from "react-hook-form";
 
 import { useRouter } from "next/router";
 
-import { auth, db } from "../../config/fire.config";
+import { useAuth } from "../../hooks/useAuth";
 
 import { Button, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUpForm() {
+  const { signUp } = useAuth();
   const classes = useStyles();
 
   const { control, errors, handleSubmit } = useForm({
@@ -31,31 +32,6 @@ export default function SignUpForm() {
   });
 
   const router = useRouter();
-
-  const createUser = (user) => {
-    return db
-      .collection("users")
-      .doc(user.uid)
-      .set(user)
-      .then(() => {
-        console.log("Success");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const signUp = ({ name, email, password }) => {
-    return auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((response) => {
-        createUser({ uid: response.user.uid, email, name });
-        console.log(response);
-      })
-      .catch((error) => {
-        return { error };
-      });
-  };
 
   const onSubmit = (data) => {
     return signUp(data).then(() => {

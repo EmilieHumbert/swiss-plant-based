@@ -17,27 +17,25 @@ const useAuthProvider = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const createUser = (user) => {
-    return db
-      .collection("users")
-      .doc(user.uid)
-      .set(user)
-      .then(() => {
-        setUser(user);
-        return user;
-      })
-      .catch((error) => {
-        return { error };
+  const createUser = async (data) => {
+    const response = await fetch(`/api/users`, {
+      method: "POST",
+      body: JSON.stringify(data),
       });
+
+    if (response.status === 200) {
+      setUser({
+        ...user,
+        ...data,
+      });
+    } else {
+      console.error(response);
+    }
   };
 
-  const getUserAdditionalData = async (user) => {
-    const response = await fetch(`/api/users/${user.uid}`);
-    const userData = await response.json();
-
-    if (userData) {
-      setUser(userData);
-    }
+  const getUserAdditionalData = async (uid) => {
+    const response = await fetch(`/api/users/${uid}`);
+    return response.json();
   };
 
   const updateUser = async ({ data, uid }) => {
@@ -68,17 +66,11 @@ const useAuthProvider = () => {
       });
   };
 
-  const signIn = ({ email, password }) => {
-    return auth
-      .signInWithEmailAndPassword(email, password)
-      .then((response) => {
-        setUser(response.user);
-        getUserAdditionalData();
-        return response.user;
-      })
-      .catch((error) => {
-        return { error };
-      });
+  const signIn = async ({ email, password }) => {
+    const response = await auth.signInWithEmailAndPassword(email, password);
+    const user = await getUserAdditionalData(response.user.uid);
+    setUser(user);
+    return user;
   };
 
   const signOut = () => {
@@ -91,10 +83,11 @@ const useAuthProvider = () => {
     });
   };
 
-  const handleAuthStateChanged = (user) => {
+  const handleAuthStateChanged = async (user) => {
     setUser(user);
     if (user) {
-      getUserAdditionalData(user);
+      const fullUser = await getUserAdditionalData(user.uid);
+      setUser(fullUser);
     }
     setLoading(false);
   };
