@@ -36,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
     right: "-5px",
   },
   titleContainer: {
-    width: "350px",
     position: "relative",
     "&:hover .edit-button-title": {
       display: "block",
@@ -46,11 +45,10 @@ const useStyles = makeStyles((theme) => ({
   editTitle: {
     display: "none",
     position: "absolute",
-    top: "-10px",
-    right: "55px",
+    top: "0",
+    right: "0",
   },
   emailContainer: {
-    width: "300px",
     position: "relative",
     "&:hover .edit-button-email": {
       display: "block",
@@ -60,12 +58,12 @@ const useStyles = makeStyles((theme) => ({
   editEmail: {
     display: "none",
     position: "absolute",
-    top: "-20px",
-    right: "30px",
+    top: "0",
+    right: "0",
   },
   locationContainer: {
-    width: "150px",
     position: "relative",
+    height: "25px",
     "&:hover .edit-button-location": {
       display: "block",
       backgroundColor: "none",
@@ -74,8 +72,8 @@ const useStyles = makeStyles((theme) => ({
   editLocation: {
     display: "none",
     position: "absolute",
-    top: "-5px",
-    right: "5px",
+    top: "0",
+    right: "0",
   },
 }));
 
@@ -166,13 +164,8 @@ export default function Settings() {
               </>
             )}
           </Box>
-          <Box
-            className={classes.locationContainer}
-            display="flex"
-            flexDirection="row"
-            alignItems="center"
-          >
-            {editLocation ? (
+          {editLocation ? (
+            <Box className={classes.locationContainer}>
               <SettingsForm
                 cancel={() => setEditLocation(false)}
                 defaultValue={auth.user.location}
@@ -186,22 +179,27 @@ export default function Settings() {
                   setEditLocation(false);
                 }}
               />
-            ) : (
-              <>
-                <LocationOnIcon fontSize="small" />
-                <p>{auth.user.location}</p>
-                <IconButton
-                  className={classNames(
-                    "edit-button-location",
-                    classes.editLocation
-                  )}
-                  onClick={() => setEditLocation(true)}
-                >
-                  <EditIcon fontSize="small" />
-                </IconButton>
-              </>
-            )}
-          </Box>
+            </Box>
+          ) : (
+            <Box
+              className={classes.locationContainer}
+              display="flex"
+              flexDirection="row"
+              alignItems="center"
+            >
+              <LocationOnIcon fontSize="small" />
+              <p>{auth.user.location}</p>
+              <IconButton
+                className={classNames(
+                  "edit-button-location",
+                  classes.editLocation
+                )}
+                onClick={() => setEditLocation(true)}
+              >
+                <EditIcon fontSize="small" />
+              </IconButton>
+            </Box>
+          )}
         </Grid>
       </Grid>
     </Container>
