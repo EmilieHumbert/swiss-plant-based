@@ -12,62 +12,81 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
-import LocationOnIcon from "@material-ui/icons/LocationOn";
 
 import classNames from "classnames";
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
-  nameTitle: {
-    margin: 0,
+  description: {
+    color: "grey",
+    fontWeight: "bold",
+    marginBottom: "20px",
+    padding: "18.5px 14px",
+    textTransform: "uppercase",
   },
   imageContainer: {
-    width: "150px",
     position: "relative",
+    width: "150px",
     "&:hover .edit-button-image": {
-      display: "block",
       backgroundColor: "white",
+      display: "block",
     },
   },
   editImage: {
     display: "none",
     position: "absolute",
-    top: "-10px",
     right: "-5px",
+    top: "-10px",
   },
   titleContainer: {
+    fontSize: "20px",
+    lineHeight: "24px",
     position: "relative",
     "&:hover .edit-button-title": {
-      display: "block",
       backgroundColor: "none",
+      display: "block",
     },
+  },
+  name: {
+    marginBottom: "20px",
+    padding: "18.5px 14px",
   },
   editTitle: {
     display: "none",
     position: "absolute",
-    top: "0",
     right: "0",
+    top: "0",
   },
   emailContainer: {
+    fontSize: "20px",
+    lineHeight: "24px",
     position: "relative",
     "&:hover .edit-button-email": {
-      display: "block",
       backgroundColor: "none",
+      display: "block",
     },
+  },
+  email: {
+    marginBottom: "20px",
+    padding: "18.5px 14px",
   },
   editEmail: {
     display: "none",
     position: "absolute",
-    top: "0",
     right: "0",
+    top: "0",
   },
   locationContainer: {
+    fontSize: "20px",
+    lineHeight: "24px",
     position: "relative",
-    height: "25px",
     "&:hover .edit-button-location": {
-      display: "block",
       backgroundColor: "none",
+      display: "block",
     },
+  },
+  location: {
+    marginBottom: "20px",
+    padding: "18.5px 14px",
   },
   editLocation: {
     display: "none",
@@ -109,7 +128,12 @@ export default function Settings() {
             </>
           </Box>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={2}>
+          <div className={classes.description}>Name</div>
+          <div className={classes.description}>Email</div>
+          <div className={classes.description}>Location</div>
+        </Grid>
+        <Grid item xs={7}>
           <Box className={classes.titleContainer}>
             {editName ? (
               <SettingsForm
@@ -127,7 +151,7 @@ export default function Settings() {
               />
             ) : (
               <>
-                <h1 className={classes.nameTitle}>{auth.user.name}</h1>
+                <div className={classes.name}>{auth.user.name}</div>
                 <IconButton
                   className={classNames("edit-button-title", classes.editTitle)}
                   onClick={() => setEditName(true)}
@@ -154,7 +178,7 @@ export default function Settings() {
               />
             ) : (
               <>
-                <p>{auth.user.email}</p>
+                <div className={classes.email}>{auth.user.email}</div>
                 <IconButton
                   className={classNames("edit-button-email", classes.editTitle)}
                   onClick={() => setEditEmail(true)}
@@ -181,14 +205,8 @@ export default function Settings() {
               />
             </Box>
           ) : (
-            <Box
-              className={classes.locationContainer}
-              display="flex"
-              flexDirection="row"
-              alignItems="center"
-            >
-              <LocationOnIcon fontSize="small" />
-              <p>{auth.user.location}</p>
+            <Box className={classes.locationContainer}>
+              <div className={classes.location}>{auth.user.location}</div>
               <IconButton
                 className={classNames(
                   "edit-button-location",

@@ -35,7 +35,7 @@ export default function SettingsForm({
   return (
     <form onSubmit={handleSubmit(submit)} className={classes.form}>
       <Grid container>
-        <Grid item xs={10}>
+        <Grid item xs={9}>
           <SettingsTextField
             control={control}
             field={field}
@@ -43,7 +43,7 @@ export default function SettingsForm({
             rules={rules}
           />
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={3}>
           <IconButton type="submit">
             <DoneIcon fontSize="small" style={{ color: green[500] }} />
           </IconButton>
