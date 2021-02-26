@@ -96,6 +96,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const onSubmit = (auth, setEdit, setError) => async (data) => {
+  try {
+    await auth.updateUser({ data, uid: auth.user.uid });
+    setEdit(false);
+  } catch (err) {
+    console.log(err);
+    setError(err);
+  }
+};
+
 export default function Settings() {
   const auth = useRequireAuth();
   const classes = useStyles();
@@ -103,6 +113,8 @@ export default function Settings() {
   const [editName, setEditName] = useState(false);
   const [editLocation, setEditLocation] = useState(false);
   const [editEmail, setEditEmail] = useState(false);
+
+  const [errorMessageName, setErrorMessageName] = useState(null);
 
   return auth.loading || !auth.user ? null : (
     <Container className={classes.root} maxWidth={"md"} spacing={3}>
@@ -139,15 +151,13 @@ export default function Settings() {
               <SettingsForm
                 cancel={() => setEditName(false)}
                 defaultValue={auth.user.name}
+                errorMessage={errorMessageName}
                 field="name"
                 label="Name"
                 rules={{
                   required: "Please enter your name",
                 }}
-                submit={(data) => {
-                  auth.updateUser({ data, uid: auth.user.uid });
-                  setEditName(false);
-                }}
+                submit={onSubmit(auth, setEditName, setErrorMessageName)}
               />
             ) : (
               <>
@@ -166,15 +176,13 @@ export default function Settings() {
               <SettingsForm
                 cancel={() => setEditEmail(false)}
                 defaultValue={auth.user.email}
+                errorMessage={errorMessageName}
                 field="email"
                 label="Email"
                 rules={{
                   required: "Please enter your email",
                 }}
-                submit={(data) => {
-                  auth.updateUser({ data, uid: auth.user.uid });
-                  setEditEmail(false);
-                }}
+                submit={onSubmit(auth, setEditEmail, setErrorMessageName)}
               />
             ) : (
               <>
@@ -193,15 +201,13 @@ export default function Settings() {
               <SettingsForm
                 cancel={() => setEditLocation(false)}
                 defaultValue={auth.user.location}
+                errorMessage={errorMessageName}
                 field="location"
                 label="Location"
                 rules={{
                   required: "Please enter your location",
                 }}
-                submit={(data) => {
-                  auth.updateUser({ data, uid: auth.user.uid });
-                  setEditLocation(false);
-                }}
+                submit={onSubmit(auth, setEditLocation, setErrorMessageName)}
               />
             </Box>
           ) : (

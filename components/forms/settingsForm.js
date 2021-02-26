@@ -19,18 +19,27 @@ const useStyles = makeStyles((theme) => ({
 export default function SettingsForm({
   cancel,
   defaultValue,
+  errorMessage,
   field,
   label,
   rules,
   submit,
 }) {
-  const { control, errors, handleSubmit } = useForm({
+  const { control, formState, handleSubmit, setError } = useForm({
     defaultValues: {
       [field]: defaultValue,
     },
   });
+  const { errors } = formState;
 
   const classes = useStyles();
+
+  if (errorMessage) {
+    setError(field, {
+      type: "manual",
+      message: errorMessage,
+    });
+  }
 
   return (
     <form onSubmit={handleSubmit(submit)} className={classes.form}>

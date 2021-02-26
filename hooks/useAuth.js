@@ -44,13 +44,13 @@ const useAuthProvider = () => {
       body: JSON.stringify(data),
     });
 
-    if (response.status === 200) {
+    if (response.ok) {
       setUser({
         ...user,
         ...data,
       });
     } else {
-      console.error(response);
+      throw new Error(response)
     }
   };
 
