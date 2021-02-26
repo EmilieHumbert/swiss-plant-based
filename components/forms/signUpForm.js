@@ -17,26 +17,37 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
     backgroundColor: "#eeeeee",
   },
+  errorMessage: {
+    color: "red",
+    textTransform: "uppercase",
+  },
 }));
 
 export default function SignUpForm() {
   const { signUp } = useAuth();
   const classes = useStyles();
 
-  const { control, errors, handleSubmit } = useForm({
+  const { control, formState, handleSubmit, setError } = useForm({
     defaultValues: {
       name: "",
       email: "",
       password: "",
     },
   });
+  const { errors } = formState;
 
   const router = useRouter();
 
-  const onSubmit = (data) => {
-    return signUp(data).then(() => {
+  const onSubmit = async (data) => {
+    try {
+      await signUp(data);
       router.push("/");
-    });
+    } catch (err) {
+      setError("submit", {
+        type: "manual",
+        message: err.message
+      });
+    }
   };
 
   return (
@@ -46,6 +57,10 @@ export default function SignUpForm() {
           name="name"
           control={control}
           rules={{
+            minLength: {
+              value: 3,
+              message: "Longer name!",
+            },
             required: "Please enter your name",
           }}
           render={(props) => (
@@ -53,6 +68,7 @@ export default function SignUpForm() {
               className={classes.input}
               fullWidth
               label="Name"
+              name="name"
               type="text"
               required
               variant="outlined"
@@ -80,6 +96,7 @@ export default function SignUpForm() {
               className={classes.input}
               fullWidth
               label="Email"
+              name="email"
               type="email"
               required
               variant="outlined"
@@ -107,6 +124,7 @@ export default function SignUpForm() {
               className={classes.input}
               fullWidth
               label="Password"
+              name="password"
               type="password"
               required
               variant="outlined"
@@ -125,6 +143,9 @@ export default function SignUpForm() {
           </Button>
         </span>
       </div>
+      {errors.submit && (
+        <div className={classes.errorMessage}>{errors.submit.message}</div>
+      )}
     </form>
   );
 }
