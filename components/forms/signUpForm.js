@@ -25,8 +25,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUpForm() {
   const { signUp } = useAuth();
+  const router = useRouter();
   const classes = useStyles();
-
   const { control, formState, handleSubmit, setError } = useForm({
     defaultValues: {
       name: "",
@@ -36,16 +36,14 @@ export default function SignUpForm() {
   });
   const { errors } = formState;
 
-  const router = useRouter();
-
   const onSubmit = async (data) => {
     try {
       await signUp(data);
       router.push("/");
-    } catch (err) {
+    } catch (error) {
       setError("submit", {
         type: "manual",
-        message: err.message
+        message: error.message
       });
     }
   };
