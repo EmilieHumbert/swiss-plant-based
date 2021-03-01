@@ -6,19 +6,26 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
 export default function ResetPasswordForm() {
-  const { control, errors, handleSubmit } = useForm({
+  const auth = useAuth();
+  const router = useRouter();
+  const { control, formState, handleSubmit, setError } = useForm({
     defaultValues: {
       email: "",
       password: "",
     },
   });
+  const { errors } = formState;
 
-  const auth = useAuth();
-  const router = useRouter();
-
-  const onSubmit = (data) => {
-    auth.sendPasswordResetEmail(data.email);
-    router.push("/login");
+  const onSubmit = async (data) => {
+    try {
+      await auth.sendPasswordResetEmail(data.email);
+      router.push("/login");
+    } catch (error) {
+      setError('submit', {
+        type: "manual",
+        message: error.message,
+      });
+    }
   };
 
   return (
@@ -36,7 +43,6 @@ export default function ResetPasswordForm() {
           }}
           render={(props) => (
             <TextField
-              // id="email"
               label="Email"
               type="email"
               required
@@ -56,6 +62,9 @@ export default function ResetPasswordForm() {
           </Button>
         </span>
       </div>
+      {errors.submit && (
+        <div>{errors.submit.message}</div>
+      )}
     </form>
   );
 }
