@@ -21,7 +21,6 @@ export default function SettingsForm({
   defaultValue,
   errorMessage,
   field,
-  label,
   rules,
   submit,
 }) {
@@ -48,7 +47,6 @@ export default function SettingsForm({
           <SettingsTextField
             control={control}
             field={field}
-            label={label}
             rules={rules}
           />
         </Grid>

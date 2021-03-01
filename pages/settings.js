@@ -153,7 +153,6 @@ export default function Settings() {
                 defaultValue={auth.user.name}
                 errorMessage={errorMessageName}
                 field="name"
-                label="Name"
                 rules={{
                   required: "Please enter your name",
                 }}
@@ -178,7 +177,6 @@ export default function Settings() {
                 defaultValue={auth.user.email}
                 errorMessage={errorMessageName}
                 field="email"
-                label="Email"
                 rules={{
                   required: "Please enter your email",
                 }}
@@ -203,7 +201,6 @@ export default function Settings() {
                 defaultValue={auth.user.location}
                 errorMessage={errorMessageName}
                 field="location"
-                label="Location"
                 rules={{
                   required: "Please enter your location",
                 }}
