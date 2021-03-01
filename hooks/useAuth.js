@@ -60,9 +60,6 @@ const useAuthProvider = () => {
       .then((response) => {
         auth.currentUser.sendEmailVerification();
         return createUser({ uid: response.user.uid, email, name });
-      })
-      .catch((error) => {
-        return { error };
       });
   };
 
