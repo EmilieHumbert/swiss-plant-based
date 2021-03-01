@@ -115,6 +115,8 @@ export default function Settings() {
   const [editEmail, setEditEmail] = useState(false);
 
   const [errorMessageName, setErrorMessageName] = useState(null);
+  const [errorMessageEmail, setErrorMessageEmail] = useState(null);
+  const [errorMessageLocation, setErrorMessageLocation] = useState(null);
 
   return auth.loading || !auth.user ? null : (
     <Container className={classes.root} maxWidth={"md"} spacing={3}>
@@ -175,12 +177,12 @@ export default function Settings() {
               <SettingsForm
                 cancel={() => setEditEmail(false)}
                 defaultValue={auth.user.email}
-                errorMessage={errorMessageName}
+                errorMessage={errorMessageEmail}
                 field="email"
                 rules={{
                   required: "Please enter your email",
                 }}
-                submit={onSubmit(auth, setEditEmail, setErrorMessageName)}
+                submit={onSubmit(auth, setEditEmail, setErrorMessageEmail)}
               />
             ) : (
               <>
@@ -199,12 +201,16 @@ export default function Settings() {
               <SettingsForm
                 cancel={() => setEditLocation(false)}
                 defaultValue={auth.user.location}
-                errorMessage={errorMessageName}
+                errorMessage={errorMessageLocation}
                 field="location"
                 rules={{
                   required: "Please enter your location",
                 }}
-                submit={onSubmit(auth, setEditLocation, setErrorMessageName)}
+                submit={onSubmit(
+                  auth,
+                  setEditLocation,
+                  setErrorMessageLocation
+                )}
               />
             </Box>
           ) : (
