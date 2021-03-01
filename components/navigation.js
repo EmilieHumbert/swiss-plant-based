@@ -122,14 +122,25 @@ export default function Navigation() {
               </Link>
             </StyledMenuItem>
           </StyledMenu>
-          <Button
-            aria-controls="customized-menu"
-            className={classes.button}
-            onClick={() => auth.signOut()}
-            variant="outlined"
-          >
-            Sign out
-          </Button>
+          {auth.user ? (
+            <Button
+              aria-controls="customized-menu"
+              className={classes.button}
+              onClick={() => auth.signOut()}
+              variant="outlined"
+            >
+              Sign Out
+            </Button>
+          ) : (
+            <Button
+              aria-controls="customized-menu"
+              className={classes.button}
+              onClick={() => auth.signIn()}
+              variant="outlined"
+            >
+              Sign In
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
     </Container>
