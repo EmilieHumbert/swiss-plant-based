@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import { useAuth } from "../hooks/useAuth";
 
@@ -77,6 +78,9 @@ const StyledMenuItem = withStyles((theme) => ({
 }))(MenuItem);
 
 export default function Navigation() {
+  const auth = useAuth();
+  const router = useRouter();
+  const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
@@ -86,9 +90,6 @@ export default function Navigation() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  const classes = useStyles();
-  const auth = useAuth();
 
   return (
     <Container className={classes.root} maxWidth={"md"}>
@@ -135,7 +136,7 @@ export default function Navigation() {
             <Button
               aria-controls="customized-menu"
               className={classes.button}
-              onClick={() => auth.signIn()}
+              onClick={() => router.push("/signup")}
               variant="outlined"
             >
               Sign In
