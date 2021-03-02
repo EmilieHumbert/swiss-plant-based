@@ -36,17 +36,36 @@ export default function LoginForm() {
 
   const { errors } = formState;
   const [isLoading, setIsLoading] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
 
   const onSubmit = async (data) => {
     try {
       setIsLoading(true);
+      setSubmitError(null);
       await auth.signIn(data);
       router.push("/");
     } catch (error) {
-      setError("submit", {
-        type: "manual",
-        message: error.message,
-      });
+      switch (error.code) {
+        case 'auth/invalid-email':
+        case 'auth/user-disabled':
+        case 'auth/user-not-found': {
+          setError("email", {
+            type: "manual",
+            message: error.message,
+          });
+          break;
+        }
+        case 'auth/wrong-password': {
+          setError("password", {
+            type: "manual",
+            message: error.message,
+          });
+          break;
+        }
+        default: {
+          setSubmitError(error.message);
+        }
+      }
     }
     setIsLoading(false);
   };
@@ -78,7 +97,7 @@ export default function LoginForm() {
             />
           )}
         />
-        {errors.email && <Error message={errors.email.message}></Error>}
+        {errors.email && <Error message={errors.email.message} />}
       </div>
       <div>
         <Controller
@@ -105,7 +124,7 @@ export default function LoginForm() {
             />
           )}
         />
-        {errors.password && <Error message={errors.password.message}></Error>}
+        {errors.password && <Error message={errors.password.message} />}
       </div>
       <div>
         <span>
@@ -122,7 +141,7 @@ export default function LoginForm() {
           <a href="#">Forgot your password?</a>
         </Link>
       </div>
-      {errors.submit && <Error message={errors.submit.message}></Error>}
+      {submitError && <Error message={submitError} />}
     </form>
   );
 }
