@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 
 import SettingsTextField from "../SettingsTextField";
+import Error from '../error'
 
 import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
@@ -58,7 +59,7 @@ export default function SettingsForm({
             <ClearIcon color="secondary" fontSize="small" />
           </IconButton>
         </Grid>
-        {errors[field] && <div>{errors[field].message}</div>}
+        {errors[field] && <Error message={errors[field].message}></Error>}
       </Grid>
     </form>
   );

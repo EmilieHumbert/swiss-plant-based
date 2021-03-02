@@ -1,6 +1,9 @@
 import React, { Controller, useForm } from "react-hook-form";
+
 import { useRouter } from "next/router";
 import { useAuth } from "../../hooks/useAuth";
+
+import Error from "../error";
 
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -21,7 +24,7 @@ export default function ResetPasswordForm() {
       await auth.sendPasswordResetEmail(data.email);
       router.push("/login");
     } catch (error) {
-      setError('submit', {
+      setError("submit", {
         type: "manual",
         message: error.message,
       });
@@ -53,7 +56,7 @@ export default function ResetPasswordForm() {
             />
           )}
         />
-        {errors.email && <div>{errors.email.message}</div>}
+        {errors.email && <Error message={errors.email.message}></Error>}
       </div>
       <div>
         <span>
@@ -62,9 +65,7 @@ export default function ResetPasswordForm() {
           </Button>
         </span>
       </div>
-      {errors.submit && (
-        <div>{errors.submit.message}</div>
-      )}
+      {errors.submit && <Error message={errors.submit.message}></Error>}
     </form>
   );
 }

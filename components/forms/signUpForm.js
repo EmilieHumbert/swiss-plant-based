@@ -4,6 +4,7 @@ import { Controller, useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 
 import { useAuth } from "../../hooks/useAuth";
+import Error from "../error";
 
 import { Button, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -16,10 +17,6 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
     backgroundColor: "#eeeeee",
-  },
-  errorMessage: {
-    color: "red",
-    textTransform: "uppercase",
   },
 }));
 
@@ -43,7 +40,7 @@ export default function SignUpForm() {
     } catch (error) {
       setError("submit", {
         type: "manual",
-        message: error.message
+        message: error.message,
       });
     }
   };
@@ -76,7 +73,7 @@ export default function SignUpForm() {
             />
           )}
         />
-        {errors.name && <div>{errors.name.message}</div>}
+        {errors.name && <Error message={errors.name.message}></Error>}
       </div>
       <div>
         <Controller
@@ -104,7 +101,7 @@ export default function SignUpForm() {
             />
           )}
         />
-        {errors.email && <div>{errors.email.message}</div>}
+        {errors.email && <Error message={errors.email.message}></Error>}
       </div>
       <div>
         <Controller
@@ -132,7 +129,7 @@ export default function SignUpForm() {
             />
           )}
         />
-        {errors.password && <div>{errors.password.message}</div>}
+        {errors.password && <Error message={errors.password.message}></Error>}
       </div>
       <div>
         <span>
@@ -141,9 +138,7 @@ export default function SignUpForm() {
           </Button>
         </span>
       </div>
-      {errors.submit && (
-        <div className={classes.errorMessage}>{errors.submit.message}</div>
-      )}
+      {errors.submit && <Error message={errors.submit.message}></Error>}
     </form>
   );
 }

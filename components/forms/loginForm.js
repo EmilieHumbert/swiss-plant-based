@@ -6,6 +6,7 @@ import Link from "next/link";
 
 import { useAuth } from "../../hooks/useAuth";
 import Button from "../button";
+import Error from "../error";
 
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
@@ -77,7 +78,7 @@ export default function LoginForm() {
             />
           )}
         />
-        {errors.email && <div>{errors.email.message}</div>}
+        {errors.email && <Error message={errors.email.message}></Error>}
       </div>
       <div>
         <Controller
@@ -104,7 +105,7 @@ export default function LoginForm() {
             />
           )}
         />
-        {errors.password && <div>{errors.password.message}</div>}
+        {errors.password && <Error message={errors.password.message}></Error>}
       </div>
       <div>
         <span>
@@ -121,7 +122,7 @@ export default function LoginForm() {
           <a href="#">Forgot your password?</a>
         </Link>
       </div>
-      {errors.submit && <div>{errors.submit.message}</div>}
+      {errors.submit && <Error message={errors.submit.message}></Error>}
     </form>
   );
 }
