@@ -56,7 +56,7 @@ export default function ResetPasswordForm() {
             />
           )}
         />
-        {errors.email && <Error message={errors.email.message}></Error>}
+        {errors.email && <Error message={errors.email.message} />}
       </div>
       <div>
         <span>
@@ -65,7 +65,7 @@ export default function ResetPasswordForm() {
           </Button>
         </span>
       </div>
-      {errors.submit && <Error message={errors.submit.message}></Error>}
+      {errors.submit && <Error message={errors.submit.message} />}
     </form>
   );
 }
