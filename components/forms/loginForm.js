@@ -22,36 +22,36 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function LoginForm() {
+  const auth = useAuth();
+  const router = useRouter();
   const classes = useStyles();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
 
-  const { control, errors, handleSubmit } = useForm({
+  const { control, formState, handleSubmit, setError } = useForm({
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  const auth = useAuth();
-  const router = useRouter();
+  const { errors } = formState;
+  const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit = (data) => {
-    setIsLoading(true);
-    setError(null);
-    return auth.signIn(data).then((response) => {
-      setIsLoading(false);
-      response.error ? setError(response.error) : router.push("/");
-    });
+  const onSubmit = async (data) => {
+    try {
+      setIsLoading(true);
+      await auth.signIn(data);
+      router.push("/");
+    } catch (error) {
+      setError("submit", {
+        type: "manual",
+        message: error.message,
+      });
+    }
+    setIsLoading(false);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {error?.message && (
-        <div>
-          <span>{error.message}</span>
-        </div>
-      )}
       <div>
         <Controller
           name="email"
@@ -121,6 +121,7 @@ export default function LoginForm() {
           <a href="#">Forgot your password?</a>
         </Link>
       </div>
+      {errors.submit && <div>{errors.submit.message}</div>}
     </form>
   );
 }
