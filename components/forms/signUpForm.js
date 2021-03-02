@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import { useRouter } from "next/router";
@@ -32,16 +32,34 @@ export default function SignUpForm() {
     },
   });
   const { errors } = formState;
+  const [submitError, setSubmitError] = useState(null);
 
   const onSubmit = async (data) => {
     try {
       await signUp(data);
       router.push("/");
     } catch (error) {
-      setError("submit", {
-        type: "manual",
-        message: error.message,
-      });
+      switch (error.code) {
+        case "auth/invalid-email":
+        case "auth/user-disabled":
+        case "auth/user-not-found": {
+          setError("email", {
+            type: "manual",
+            message: error.message,
+          });
+          break;
+        }
+        case "auth/wrong-password": {
+          setError("password", {
+            type: "manual",
+            message: error.message,
+          });
+          break;
+        }
+        default: {
+          setSubmitError(error.message);
+        }
+      }
     }
   };
 
@@ -73,7 +91,7 @@ export default function SignUpForm() {
             />
           )}
         />
-        {errors.name && <Error message={errors.name.message}></Error>}
+        {errors.name && <Error message={errors.name.message} />}
       </div>
       <div>
         <Controller
@@ -101,7 +119,7 @@ export default function SignUpForm() {
             />
           )}
         />
-        {errors.email && <Error message={errors.email.message}></Error>}
+        {errors.email && <Error message={errors.email.message} />}
       </div>
       <div>
         <Controller
@@ -129,7 +147,7 @@ export default function SignUpForm() {
             />
           )}
         />
-        {errors.password && <Error message={errors.password.message}></Error>}
+        {errors.password && <Error message={errors.password.message} />}
       </div>
       <div>
         <span>
@@ -138,7 +156,7 @@ export default function SignUpForm() {
           </Button>
         </span>
       </div>
-      {errors.submit && <Error message={errors.submit.message}></Error>}
+      {submitError && <Error message={submitError} />}
     </form>
   );
 }
