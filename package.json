@@ -21,6 +21,7 @@
     "react-hook-form": "^6.15.1"
   },
   "devDependencies": {
+    "@hookform/devtools": "^2.2.1",
     "eslint": "^7.20.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-config-standard": "^16.0.2",
