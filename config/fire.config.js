@@ -21,5 +21,6 @@ if (!firebase.apps.length) {
 const app = firebase.app();
 const auth = firebase.auth();
 const now = firebase.firestore.Timestamp.now();
-export { auth, now };
+const storage = firebase.storage();
+export { auth, now, storage };
 console.log(app.name ? "Firebase Mode Activated!" : "Firebase not working :(");
