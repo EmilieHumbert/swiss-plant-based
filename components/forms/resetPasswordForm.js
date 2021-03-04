@@ -1,12 +1,12 @@
 import React, { Controller, useForm } from "react-hook-form";
 
 import { useRouter } from "next/router";
-import { useAuth } from "../../hooks/useAuth";
 
+import { useAuth } from "../../hooks/useAuth";
 import Error from "../error";
+import Button from "../button";
 
 import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
 
 export default function ResetPasswordForm() {
   const auth = useAuth();
@@ -60,9 +60,7 @@ export default function ResetPasswordForm() {
       </div>
       <div>
         <span>
-          <Button type="submit" variant="outlined">
-            Send reset link
-          </Button>
+          <Button title="Send reset link" type="submit" variant="outlined" />
         </span>
       </div>
       {errors.submit && <Error message={errors.submit.message} />}
