@@ -5,18 +5,14 @@ import { useRouter } from "next/router";
 
 import { useAuth } from "../../hooks/useAuth";
 import Error from "../error";
+import Button from "../button";
 
-import { Button, TextField } from "@material-ui/core";
+import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   input: {
     marginTop: theme.spacing(2),
-  },
-  button: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
-    backgroundColor: "#eeeeee",
   },
 }));
 
@@ -151,9 +147,7 @@ export default function SignUpForm() {
       </div>
       <div>
         <span>
-          <Button className={classes.button} type="submit" variant="outlined">
-            Sign up
-          </Button>
+          <Button title="Sign up" type="submit" variant="outlined" />
         </span>
       </div>
       {submitError && <Error message={submitError} />}
