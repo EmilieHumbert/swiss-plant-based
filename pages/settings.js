@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Image from "next/image";
 
 import { useRequireAuth } from "../hooks/useRequireAuth";
 import SettingsForm from "../components/forms/settingsForm";
+import ImageForm from "../components/forms/imageForm";
 
 import {
   Box,
@@ -124,22 +124,7 @@ export default function Settings() {
       <Grid container>
         <Grid item xs={3}>
           <Box className={classes.imageContainer}>
-            <>
-              <Image
-                src="/images/profile_picture.jpg"
-                alt="Profile picture"
-                width={150}
-                height={150}
-              />
-              <IconButton
-                className={classNames("edit-button-image", classes.editImage)}
-                onClick={() => {
-                  // setEditImage(true);
-                }}
-              >
-                <EditIcon fontSize="small" />
-              </IconButton>
-            </>
+            <ImageForm />
           </Box>
         </Grid>
         <Grid item xs={2}>
@@ -183,6 +168,7 @@ export default function Settings() {
                   required: "Please enter your email",
                 }}
                 submit={onSubmit(auth, setEditEmail, setErrorMessageEmail)}
+                // when email changed, make sure it change authentication email as well
               />
             ) : (
               <>
@@ -196,6 +182,7 @@ export default function Settings() {
               </>
             )}
           </Box>
+          {/* add password */}
           {editLocation ? (
             <Box className={classes.locationContainer}>
               <SettingsForm
