@@ -4,10 +4,11 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 import { useAuth } from "../hooks/useAuth";
+import Button from "../components/button";
 
 import {
   AppBar,
-  Button,
+  Button as MaterialUIButton,
   Container,
   makeStyles,
   Menu,
@@ -22,9 +23,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     padding: 0,
-  },
-  button: {
-    color: "#33691e",
   },
   link: {
     color: "#33691e",
@@ -102,9 +100,12 @@ export default function Navigation() {
               </a>
             </Link>
           </Typography>
-          <Button aria-controls="customized-menu" onClick={handleClick}>
+          <MaterialUIButton
+            aria-controls="customized-menu"
+            onClick={handleClick}
+          >
             <PersonIcon />
-          </Button>
+          </MaterialUIButton>
           <StyledMenu
             id="customized-menu"
             anchorEl={anchorEl}
@@ -126,21 +127,17 @@ export default function Navigation() {
           {auth.user ? (
             <Button
               aria-controls="customized-menu"
-              className={classes.button}
               onClick={() => auth.signOut()}
+              title="Sign Out"
               variant="outlined"
-            >
-              Sign Out
-            </Button>
+            />
           ) : (
             <Button
               aria-controls="customized-menu"
-              className={classes.button}
               onClick={() => router.push("/signup")}
+              title="Sign In"
               variant="outlined"
-            >
-              Sign In
-            </Button>
+            />
           )}
         </Toolbar>
       </AppBar>
