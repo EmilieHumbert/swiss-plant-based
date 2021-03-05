@@ -15,11 +15,6 @@ const useStyles = makeStyles((theme) => ({
   input: {
     marginTop: theme.spacing(2),
   },
-  button: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
-    backgroundColor: "#eeeeee",
-  },
 }));
 
 export default function LoginForm() {
@@ -129,7 +124,6 @@ export default function LoginForm() {
       <div>
         <span>
           <Button
-            className={classes.button}
             title="Login"
             type="submit"
             isLoading={isLoading}
