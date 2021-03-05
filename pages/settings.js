@@ -31,12 +31,6 @@ const useStyles = makeStyles((theme) => ({
       display: "block",
     },
   },
-  editImage: {
-    display: "none",
-    position: "absolute",
-    right: "-5px",
-    top: "-10px",
-  },
   titleContainer: {
     fontSize: "20px",
     lineHeight: "24px",

@@ -7,14 +7,35 @@ import { storage } from "../../config/fire.config";
 import { useRequireAuth } from "../../hooks/useRequireAuth";
 import Error from "../error";
 
-import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
+import IconButton from "@material-ui/core/IconButton";
+import { makeStyles } from "@material-ui/core/styles";
 
 const DEFAULT_PROFILE_IMAGE = "/images/profile_picture.jpg";
 
+const useStyles = makeStyles((theme) => ({
+  input: {
+    display: "none",
+  },
+  imageContainer: {
+    position: "relative",
+    width: "150px",
+    "&:hover .edit-button-image": {
+      backgroundColor: "white",
+      display: "block",
+    },
+  },
+  editButton: {
+    position: "relative",
+    right: "-5px",
+    top: "-100px",
+    pointerEvents: "none",
+  },
+}));
+
 export default function ImageForm() {
   const auth = useRequireAuth();
-  const [editImage, setEditImage] = useState(false);
+  const classes = useStyles();
   const [srcImage, setSrcImage] = useState(DEFAULT_PROFILE_IMAGE);
   const [submitError, setSubmitError] = useState(null);
   const { handleSubmit, register } = useForm();
@@ -25,11 +46,9 @@ export default function ImageForm() {
   }, [auth.user?.profileImage]);
 
   const onSubmit = (data) => {
-    console.log(data);
     const storageRef = storage.ref();
     const fileRef = storageRef.child(`images/profile/${auth.user.uid}`);
-    setEditImage(false);
-    const uploadTask = fileRef.put(data.picture[0]);
+    const uploadTask = fileRef.put(data.image[0]);
 
     uploadTask.on(
       "state_changed",
@@ -65,29 +84,23 @@ export default function ImageForm() {
 
   return (
     <div>
-      {editImage ? (
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <input ref={register} type="file" name="picture" />
-          <button>Upload file</button>
-          {submitError && <Error message={submitError} />}
-        </form>
-      ) : (
-        <>
-          <Image
-            src={srcImage}
-            alt="Profile picture"
-            width={150}
-            height={150}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <label htmlFor="profile-image">
+          <Image src={srcImage} alt="Profile image" width={150} height={150} />
+          <input
+            id="profile-image"
+            className={classes.input}
+            ref={register}
+            type="file"
+            name="image"
+            onChange={handleSubmit(onSubmit)}
           />
-          <IconButton
-            onClick={() => {
-              setEditImage(true);
-            }}
-          >
-            <EditIcon fontSize="small" />
+          <IconButton className={classes.editButton}>
+            <EditIcon />
           </IconButton>
-        </>
-      )}
+        </label>
+        {submitError && <Error message={submitError} />}
+      </form>
     </div>
   );
 }
