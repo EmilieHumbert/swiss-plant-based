@@ -24,12 +24,12 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "uppercase",
   },
   imageContainer: {
-    position: "relative",
+    // position: "relative",
     width: "150px",
-    "&:hover .edit-button-image": {
-      backgroundColor: "white",
-      display: "block",
-    },
+    // "&:hover .edit-button-image": {
+    //   backgroundColor: "white",
+    //   display: "block",
+    // },
   },
   titleContainer: {
     fontSize: "20px",

@@ -11,25 +11,28 @@ import EditIcon from "@material-ui/icons/Edit";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 
+import classNames from "classnames";
+
 const DEFAULT_PROFILE_IMAGE = "/images/profile_picture.jpg";
 
 const useStyles = makeStyles((theme) => ({
   input: {
     display: "none",
   },
-  imageContainer: {
+  imageLabel: {
+    cursor: "pointer",
     position: "relative",
-    width: "150px",
     "&:hover .edit-button-image": {
-      backgroundColor: "white",
       display: "block",
     },
   },
   editButton: {
-    position: "relative",
-    right: "-5px",
-    top: "-100px",
+    background: "white",
+    display: "none",
     pointerEvents: "none",
+    position: "absolute",
+    right: "-10px",
+    top: "-150px",
   },
 }));
 
@@ -85,7 +88,7 @@ export default function ImageForm() {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="profile-image">
+        <label htmlFor="profile-image" className={classes.imageLabel}>
           <Image src={srcImage} alt="Profile image" width={150} height={150} />
           <input
             id="profile-image"
@@ -95,8 +98,10 @@ export default function ImageForm() {
             name="image"
             onChange={handleSubmit(onSubmit)}
           />
-          <IconButton className={classes.editButton}>
-            <EditIcon />
+          <IconButton
+            className={classNames("edit-button-image", classes.editButton)}
+          >
+            <EditIcon fontSize="small" />
           </IconButton>
         </label>
         {submitError && <Error message={submitError} />}
