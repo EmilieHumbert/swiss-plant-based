@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     "&:hover .edit-button-password": {
       backgroundColor: "none",
       display: "block",
-  },
+    },
     "&:hover .edit-button-location": {
       backgroundColor: "none",
       display: "block",
@@ -154,7 +154,37 @@ export default function Settings() {
               </>
             )}
           </Box>
-          {/* add password */}
+          <Box className={classes.inputContainer}>
+            {editPassword ? (
+              <SettingsForm
+                cancel={() => setEditPassword(false)}
+                defaultValue="***"
+                errorMessage={errorMessagePassword}
+                field="password"
+                rules={{
+                  required: "Please enter your password",
+                }}
+                submit={onSubmit(
+                  auth,
+                  setEditPassword,
+                  setErrorMessagePassword
+                )}
+              />
+            ) : (
+              <>
+                <div className={classes.inputBox}>***</div>
+                <IconButton
+                  className={classNames(
+                    "edit-button-password",
+                    classes.editInputBox
+                  )}
+                  onClick={() => setEditPassword(true)}
+                >
+                  <EditIcon fontSize="small" />
+                </IconButton>
+              </>
+            )}
+          </Box>
           {editLocation ? (
             <Box className={classes.inputContainer}>
               <SettingsForm
