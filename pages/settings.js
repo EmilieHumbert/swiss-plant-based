@@ -24,14 +24,9 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "uppercase",
   },
   imageContainer: {
-    // position: "relative",
     width: "150px",
-    // "&:hover .edit-button-image": {
-    //   backgroundColor: "white",
-    //   display: "block",
-    // },
   },
-  titleContainer: {
+  inputContainer: {
     fontSize: "20px",
     lineHeight: "24px",
     position: "relative",
@@ -39,54 +34,28 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "none",
       display: "block",
     },
-  },
-  name: {
-    marginBottom: "20px",
-    padding: "18.5px 14px",
-  },
-  editTitle: {
-    display: "none",
-    position: "absolute",
-    right: "0",
-    top: "0",
-  },
-  emailContainer: {
-    fontSize: "20px",
-    lineHeight: "24px",
-    position: "relative",
     "&:hover .edit-button-email": {
       backgroundColor: "none",
       display: "block",
     },
+    "&:hover .edit-button-password": {
+      backgroundColor: "none",
+      display: "block",
   },
-  email: {
-    marginBottom: "20px",
-    padding: "18.5px 14px",
-  },
-  editEmail: {
-    display: "none",
-    position: "absolute",
-    right: "0",
-    top: "0",
-  },
-  locationContainer: {
-    fontSize: "20px",
-    lineHeight: "24px",
-    position: "relative",
     "&:hover .edit-button-location": {
       backgroundColor: "none",
       display: "block",
     },
   },
-  location: {
+  inputBox: {
     marginBottom: "20px",
     padding: "18.5px 14px",
   },
-  editLocation: {
+  editInputBox: {
     display: "none",
     position: "absolute",
-    top: "0",
     right: "0",
+    top: "0",
   },
 }));
 
@@ -107,10 +76,12 @@ export default function Settings() {
   const [editName, setEditName] = useState(false);
   const [editLocation, setEditLocation] = useState(false);
   const [editEmail, setEditEmail] = useState(false);
+  const [editPassword, setEditPassword] = useState(false);
 
   const [errorMessageName, setErrorMessageName] = useState(null);
   const [errorMessageEmail, setErrorMessageEmail] = useState(null);
   const [errorMessageLocation, setErrorMessageLocation] = useState(null);
+  const [errorMessagePassword, setErrorMessagePassword] = useState(null);
 
   return auth.loading || !auth.user ? null : (
     <Container className={classes.root} maxWidth={"md"} spacing={3}>
@@ -124,10 +95,11 @@ export default function Settings() {
         <Grid item xs={2}>
           <div className={classes.description}>Name</div>
           <div className={classes.description}>Email</div>
+          <div className={classes.description}>Password</div>
           <div className={classes.description}>Location</div>
         </Grid>
         <Grid item xs={7}>
-          <Box className={classes.titleContainer}>
+          <Box className={classes.inputContainer}>
             {editName ? (
               <SettingsForm
                 cancel={() => setEditName(false)}
@@ -141,9 +113,12 @@ export default function Settings() {
               />
             ) : (
               <>
-                <div className={classes.name}>{auth.user.name}</div>
+                <div className={classes.inputBox}>{auth.user.name}</div>
                 <IconButton
-                  className={classNames("edit-button-title", classes.editTitle)}
+                  className={classNames(
+                    "edit-button-title",
+                    classes.editInputBox
+                  )}
                   onClick={() => setEditName(true)}
                 >
                   <EditIcon fontSize="small" />
@@ -151,7 +126,7 @@ export default function Settings() {
               </>
             )}
           </Box>
-          <Box className={classes.emailContainer}>
+          <Box className={classes.inputContainer}>
             {editEmail ? (
               <SettingsForm
                 cancel={() => setEditEmail(false)}
@@ -166,9 +141,12 @@ export default function Settings() {
               />
             ) : (
               <>
-                <div className={classes.email}>{auth.user.email}</div>
+                <div className={classes.inputBox}>{auth.user.email}</div>
                 <IconButton
-                  className={classNames("edit-button-email", classes.editTitle)}
+                  className={classNames(
+                    "edit-button-email",
+                    classes.editInputBox
+                  )}
                   onClick={() => setEditEmail(true)}
                 >
                   <EditIcon fontSize="small" />
@@ -178,7 +156,7 @@ export default function Settings() {
           </Box>
           {/* add password */}
           {editLocation ? (
-            <Box className={classes.locationContainer}>
+            <Box className={classes.inputContainer}>
               <SettingsForm
                 cancel={() => setEditLocation(false)}
                 defaultValue={auth.user.location}
@@ -195,12 +173,12 @@ export default function Settings() {
               />
             </Box>
           ) : (
-            <Box className={classes.locationContainer}>
-              <div className={classes.location}>{auth.user.location}</div>
+            <Box className={classes.inputContainer}>
+              <div className={classes.inputBox}>{auth.user.location}</div>
               <IconButton
                 className={classNames(
                   "edit-button-location",
-                  classes.editLocation
+                  classes.editInputBox
                 )}
                 onClick={() => setEditLocation(true)}
               >
