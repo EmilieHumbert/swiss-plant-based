@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import Image from "next/image";
 
 import { storage } from "../../config/fire.config";
+import { DEFAULT_PROFILE_IMAGE, IMAGEKIT_ID } from "../../config/constants";
 import { useRequireAuth } from "../../hooks/useRequireAuth";
 import Error from "../error";
 
@@ -12,9 +13,6 @@ import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 
 import classNames from "classnames";
-
-const IMAGEKIT_ID = process.env.NEXT_PUBLIC_IMAGEKIT_ID;
-const DEFAULT_PROFILE_IMAGE = "/images/profile_picture.jpg";
 
 const useStyles = makeStyles((theme) => ({
   input: {
