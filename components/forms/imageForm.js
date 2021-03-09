@@ -13,6 +13,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import classNames from "classnames";
 
+const IMAGEKIT_ID = process.env.NEXT_PUBLIC_IMAGEKIT_ID;
 const DEFAULT_PROFILE_IMAGE = "/images/profile_picture.jpg";
 
 const useStyles = makeStyles((theme) => ({
@@ -35,6 +36,13 @@ const useStyles = makeStyles((theme) => ({
     top: "-150px",
   },
 }));
+
+const imageLoader = ({ src, width, quality = 90 }) => {
+  return src.replace(
+    "https://firebasestorage.googleapis.com/",
+    `https://ik.imagekit.io/${IMAGEKIT_ID}/tr:w-${width},h-${width},q-${quality},fo-auto/`
+  );
+};
 
 export default function ImageForm() {
   const auth = useRequireAuth();
@@ -89,7 +97,13 @@ export default function ImageForm() {
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="profile-image" className={classes.imageLabel}>
-          <Image src={srcImage} alt="Profile image" width={150} height={150} />
+          <Image
+            loader={imageLoader}
+            src={srcImage}
+            alt="Profile image"
+            width={150}
+            height={150}
+          />
           <input
             id="profile-image"
             className={classes.input}
