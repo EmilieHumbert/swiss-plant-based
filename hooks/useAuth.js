@@ -4,6 +4,15 @@ import { auth } from "../config/fire.config";
 const authContext = createContext({ user: {} });
 const { Provider } = authContext;
 
+const prepareUser = (user, data = {}) => {
+  if (!user) return null;
+
+  return {
+    ...user,
+    ...data,
+  };
+};
+
 export function AuthProvider(props) {
   const auth = useAuthProvider();
   return <Provider value={auth}>{props.children}</Provider>;
@@ -24,10 +33,7 @@ const useAuthProvider = () => {
     });
 
     if (response.status === 200) {
-      setUser({
-        ...user,
-        ...data,
-      });
+      setUser(prepareUser(user, data));
     } else {
       console.error(response);
     }
@@ -45,12 +51,9 @@ const useAuthProvider = () => {
     });
 
     if (response.ok) {
-      setUser({
-        ...user,
-        ...data,
-      });
+      setUser(prepareUser(user, data));
     } else {
-      throw new Error(response)
+      throw new Error(response);
     }
   };
 
@@ -65,13 +68,14 @@ const useAuthProvider = () => {
 
   const signIn = async ({ email, password }) => {
     const response = await auth.signInWithEmailAndPassword(email, password);
-    const user = await getUserAdditionalData(response.user.uid);
-    setUser(user);
-    return user;
+    const data = await getUserAdditionalData(response.user.uid);
+    const fullUser = prepareUser(user, data);
+    setUser(fullUser);
+    return fullUser;
   };
 
   const signOut = () => {
-    return auth.signOut().then(() => setUser(false));
+    return auth.signOut().then(() => setUser(null));
   };
 
   const sendPasswordResetEmail = (email) => {
@@ -81,10 +85,10 @@ const useAuthProvider = () => {
   };
 
   const handleAuthStateChanged = async (user) => {
-    setUser(user);
+    setUser(prepareUser(user));
     if (user) {
-      const fullUser = await getUserAdditionalData(user.uid);
-      setUser(fullUser);
+      const data = await getUserAdditionalData(user.uid);
+      setUser(prepareUser(user, data));
     }
     setLoading(false);
   };
