@@ -25,13 +25,14 @@ const useStyles = makeStyles((theme) => ({
       display: "block",
     },
   },
+  image: { borderRadius: "50%" },
   editButton: {
     background: "white",
     display: "none",
     pointerEvents: "none",
     position: "absolute",
-    right: "-10px",
-    top: "-150px",
+    right: "20px",
+    top: "-120px",
   },
 }));
 
@@ -96,6 +97,7 @@ export default function ImageForm() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="profile-image" className={classes.imageLabel}>
           <Image
+            className={classes.image}
             loader={imageLoader}
             src={srcImage}
             alt="Profile image"
