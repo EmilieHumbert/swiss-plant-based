@@ -36,7 +36,7 @@ export default function Profile() {
       <Grid container>
         <Grid item xs={3}>
           <Image
-            src="/images/profile_picture.jpg"
+            src={auth.user.profileImage}
             alt="Profile picture"
             className={classes.image}
             width={150}
