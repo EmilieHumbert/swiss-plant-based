@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 
 import { useRequireAuth } from "../hooks/useRequireAuth";
+import { DEFAULT_PROFILE_IMAGE } from "../config/constants";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Button, Container, Grid } from "@material-ui/core";
@@ -36,7 +37,7 @@ export default function Profile() {
       <Grid container>
         <Grid item xs={3}>
           <Image
-            src={auth.user.profileImage}
+            src={auth.user.profileImage || DEFAULT_PROFILE_IMAGE}
             alt="Profile picture"
             className={classes.image}
             width={150}
