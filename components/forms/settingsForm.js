@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 
 import SettingsTextField from "../SettingsTextField";
 import Error from "../error";
+import PasswordConfirmationForm from "./PasswordConfirmationForm";
 
 import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
@@ -10,6 +11,8 @@ import DoneIcon from "@material-ui/icons/Done";
 import ClearIcon from "@material-ui/icons/Clear";
 import Grid from "@material-ui/core/Grid";
 import { green } from "@material-ui/core/colors";
+
+import { nanoid } from "nanoid";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -22,6 +25,7 @@ export default function SettingsForm({
   defaultValue,
   errorMessage,
   field,
+  isPasswordConfirmationFormOpen,
   rules,
   submit,
 }) {
@@ -32,8 +36,6 @@ export default function SettingsForm({
   });
   const { errors } = formState;
 
-  const classes = useStyles();
-
   if (errorMessage) {
     setError(field, {
       type: "manual",
@@ -41,22 +43,37 @@ export default function SettingsForm({
     });
   }
 
+  const formId = nanoid();
+  const classes = useStyles();
+
   return (
-    <form onSubmit={handleSubmit(submit)} className={classes.form}>
-      <Grid container>
-        <Grid item xs={9}>
-          <SettingsTextField control={control} field={field} rules={rules} />
+    <>
+      <form
+        onSubmit={handleSubmit(submit)}
+        className={classes.form}
+        id={formId}
+      >
+        <Grid container>
+          <Grid item xs={9}>
+            <SettingsTextField control={control} field={field} rules={rules} />
+          </Grid>
+          <Grid item xs={3}>
+            <IconButton type="submit">
+              <DoneIcon fontSize="small" style={{ color: green[500] }} />
+            </IconButton>
+            <IconButton onClick={cancel}>
+              <ClearIcon color="secondary" fontSize="small" />
+            </IconButton>
+          </Grid>
+          {errors[field] && <Error message={errors[field].message} />}
         </Grid>
-        <Grid item xs={3}>
-          <IconButton type="submit">
-            <DoneIcon fontSize="small" style={{ color: green[500] }} />
-          </IconButton>
-          <IconButton onClick={cancel}>
-            <ClearIcon color="secondary" fontSize="small" />
-          </IconButton>
-        </Grid>
-        {errors[field] && <Error message={errors[field].message} />}
-      </Grid>
-    </form>
+      </form>
+      {isPasswordConfirmationFormOpen && (
+        <PasswordConfirmationForm
+          cancel={cancel}
+          submit={() => document.getElementById(formId).submit()}
+        />
+      )}
+    </>
   );
 }

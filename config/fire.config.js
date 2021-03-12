@@ -22,5 +22,6 @@ const app = firebase.app();
 const auth = firebase.auth();
 const now = firebase.firestore.Timestamp.now();
 const storage = firebase.storage();
-export { auth, now, storage };
+const credential = firebase.auth.EmailAuthProvider.credential;
+export { auth, now, storage, credential };
 console.log(app.name ? "Firebase Mode Activated!" : "Firebase not working :(");

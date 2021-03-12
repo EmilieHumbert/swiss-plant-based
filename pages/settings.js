@@ -59,16 +59,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const onSubmit = (auth, setEdit, setError) => async (data) => {
-  try {
-    await auth.updateUser({ data, uid: auth.user.uid });
-    setEdit(false);
-  } catch (err) {
-    console.log(err);
-    setError(err);
-  }
-};
-
 export default function Settings() {
   const auth = useRequireAuth();
   const classes = useStyles();
@@ -82,6 +72,30 @@ export default function Settings() {
   const [errorMessageEmail, setErrorMessageEmail] = useState(null);
   const [errorMessageLocation, setErrorMessageLocation] = useState(null);
   const [errorMessagePassword, setErrorMessagePassword] = useState(null);
+
+  const [
+    isPasswordConfirmationFormOpen,
+    setIsPasswordConfirmationFormOpen,
+  ] = useState(false);
+
+  const onSubmit = (auth, setEdit, setError) => async (data) => {
+    try {
+      await auth.updateUser({ data, uid: auth.user.uid });
+      setEdit(false);
+      setIsPasswordConfirmationFormOpen(false);
+    } catch (err) {
+      console.log(err);
+      if (err.code === "auth/requires-recent-login") {
+        setIsPasswordConfirmationFormOpen(true);
+      }
+      // setError(err);
+    }
+  };
+
+  const onCancel = (setEdit) => () => {
+    setEdit(false);
+    setIsPasswordConfirmationFormOpen(false);
+  };
 
   return auth.loading || !auth.user ? null : (
     <Container className={classes.root} maxWidth={"md"} spacing={3}>
@@ -102,7 +116,7 @@ export default function Settings() {
           <Box className={classes.inputContainer}>
             {editName ? (
               <SettingsForm
-                cancel={() => setEditName(false)}
+                cancel={onCancel(setEditName)}
                 defaultValue={auth.user.name}
                 errorMessage={errorMessageName}
                 field="name"
@@ -129,15 +143,15 @@ export default function Settings() {
           <Box className={classes.inputContainer}>
             {editEmail ? (
               <SettingsForm
-                cancel={() => setEditEmail(false)}
+                cancel={onCancel(setEditEmail)}
                 defaultValue={auth.user.email}
                 errorMessage={errorMessageEmail}
                 field="email"
+                isPasswordConfirmationFormOpen={isPasswordConfirmationFormOpen}
                 rules={{
                   required: "Please enter your email",
                 }}
                 submit={onSubmit(auth, setEditEmail, setErrorMessageEmail)}
-                // when email changed, make sure it change authentication email as well
               />
             ) : (
               <>
@@ -157,7 +171,7 @@ export default function Settings() {
           <Box className={classes.inputContainer}>
             {editPassword ? (
               <SettingsForm
-                cancel={() => setEditPassword(false)}
+                cancel={onCancel(setEditPassword)}
                 defaultValue="***"
                 errorMessage={errorMessagePassword}
                 field="password"
@@ -188,7 +202,7 @@ export default function Settings() {
           {editLocation ? (
             <Box className={classes.inputContainer}>
               <SettingsForm
-                cancel={() => setEditLocation(false)}
+                cancel={onCancel(setEditLocation)}
                 defaultValue={auth.user.location}
                 errorMessage={errorMessageLocation}
                 field="location"

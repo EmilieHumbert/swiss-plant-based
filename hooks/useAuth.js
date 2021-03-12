@@ -45,6 +45,10 @@ const useAuthProvider = () => {
   };
 
   const updateUser = async ({ data, uid }) => {
+    if (data.email) {
+      await auth.currentUser.updateEmail(data.email);
+    }
+
     const response = await fetch(`/api/users/${uid}`, {
       method: "POST",
       body: JSON.stringify(data),
@@ -98,17 +102,6 @@ const useAuthProvider = () => {
 
     return () => unsub();
   }, []);
-
-  // useEffect(() => {
-  //   if (user?.uid) {
-  //     // Subscribe to user document on mount
-  //     const unsubscribe = db
-  //       .collection("users")
-  //       .doc(user.uid)
-  //       .onSnapshot((doc) => setUser(doc.data()));
-  //     return () => unsubscribe();
-  //   }
-  // }, []);
 
   return {
     loading,
