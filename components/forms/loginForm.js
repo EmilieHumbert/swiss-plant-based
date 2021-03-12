@@ -41,16 +41,16 @@ export default function LoginForm() {
       router.push("/");
     } catch (error) {
       switch (error.code) {
-        case 'auth/invalid-email':
-        case 'auth/user-disabled':
-        case 'auth/user-not-found': {
+        case "auth/invalid-email":
+        case "auth/user-disabled":
+        case "auth/user-not-found": {
           setError("email", {
             type: "manual",
             message: error.message,
           });
           break;
         }
-        case 'auth/wrong-password': {
+        case "auth/wrong-password": {
           setError("password", {
             type: "manual",
             message: error.message,
@@ -123,11 +123,7 @@ export default function LoginForm() {
       </div>
       <div>
         <span>
-          <Button
-            title="Login"
-            type="submit"
-            isLoading={isLoading}
-          />
+          <Button title="Login" type="submit" isLoading={isLoading} />
         </span>
       </div>
       <div>
