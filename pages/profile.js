@@ -46,10 +46,12 @@ export default function Profile() {
         </Grid>
         <Grid item xs={9}>
           <h1 className={classes.nameTitle}>{auth.user.name}</h1>
-          <Box display="flex" flexDirection="row" alignItems="center">
-            <LocationOnIcon />
-            <p>{auth.user.location}</p>
-          </Box>
+          {auth.user.location && (
+            <Box display="flex" flexDirection="row" alignItems="center">
+              <LocationOnIcon />
+              <p>{auth.user.location}</p>
+            </Box>
+          )}
         </Grid>
         <Grid item xs={12} className={classes.yourRecipes}>
           <h2>
