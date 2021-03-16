@@ -4,7 +4,7 @@ import { auth } from "../config/fire.config";
 const authContext = createContext({ user: {} });
 const { Provider } = authContext;
 
-const prepareUser = (user, data = {}) => {
+const prepareUser = (user, { password: _password, ...data } = {}) => {
   if (!user) return null;
 
   return {
@@ -49,16 +49,25 @@ const useAuthProvider = () => {
       await auth.currentUser.updateEmail(data.email);
     }
 
-    const response = await fetch(`/api/users/${uid}`, {
-      method: "POST",
-      body: JSON.stringify(data),
-    });
-
-    if (response.ok) {
-      setUser(prepareUser(user, data));
-    } else {
-      throw new Error(response);
+    if (data.password) {
+      await auth.currentUser.updatePassword(data.password);
     }
+
+    if (data.name || data.location) {
+      const response = await fetch(`/api/users/${uid}`, {
+        method: "POST",
+        body: JSON.stringify({
+          name: data.name,
+          location: data.location,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(response);
+      }
+    }
+
+    setUser(prepareUser(user, data));
   };
 
   const signUp = ({ name, email, password }) => {

@@ -177,6 +177,7 @@ export default function Settings() {
                 defaultValue=""
                 errorMessage={errorMessagePassword}
                 field="password"
+                isPasswordConfirmationFormOpen={isPasswordConfirmationFormOpen}
                 rules={{
                   required: "Please enter your password",
                 }}
