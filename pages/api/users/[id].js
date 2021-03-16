@@ -9,7 +9,14 @@ export default async (req, res) => {
   }
 
   if (req.method === "POST") {
-    await updateUser(req.query.id, JSON.parse(req.body));
+    try {
+      await updateUser(req.query.id, JSON.parse(req.body));
+    } catch (error) {
+      const message = error.statusCode ? error.message : "Unhandled error";
+      res.statusCode = error.statusCode || 500;
+      return res.json({ error: message });
+    }
+
     res.statusCode = 200;
     return res.json({ ok: true });
   }
