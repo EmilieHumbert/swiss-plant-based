@@ -33,7 +33,7 @@ const useAuthProvider = () => {
     });
 
     if (response.status === 200) {
-      setUser(prepareUser(user, data));
+      setUser(prepareUser(response.user, data));
     } else {
       console.error(response);
     }
@@ -73,7 +73,7 @@ const useAuthProvider = () => {
   const signIn = async ({ email, password }) => {
     const response = await auth.signInWithEmailAndPassword(email, password);
     const data = await getUserAdditionalData(response.user.uid);
-    const fullUser = prepareUser(user, data);
+    const fullUser = prepareUser(response.user, data);
     setUser(fullUser);
     return fullUser;
   };
