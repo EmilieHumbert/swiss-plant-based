@@ -99,7 +99,7 @@ export default function Settings() {
 
   return auth.loading || !auth.user ? null : (
     <Container className={classes.root} maxWidth={"md"} spacing={3}>
-      <h1>My Profile</h1>
+      <h1>Settings</h1>
       <Grid container>
         <Grid item xs={3}>
           <Box className={classes.imageContainer}>
