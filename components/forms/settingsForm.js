@@ -28,6 +28,7 @@ export default function SettingsForm({
   isPasswordConfirmationFormOpen,
   rules,
   submit,
+  type,
 }) {
   const { control, formState, handleSubmit, setError } = useForm({
     defaultValues: {
@@ -55,7 +56,12 @@ export default function SettingsForm({
       >
         <Grid container>
           <Grid item xs={9}>
-            <SettingsTextField control={control} field={field} rules={rules} />
+            <SettingsTextField
+              control={control}
+              field={field}
+              rules={rules}
+              type={type}
+            />
           </Grid>
           <Grid item xs={3}>
             <IconButton type="submit">

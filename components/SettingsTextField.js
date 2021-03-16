@@ -4,7 +4,13 @@ import { Controller } from "react-hook-form";
 
 import { TextField } from "@material-ui/core";
 
-export default function SettingsTextField({ control, field, label, rules }) {
+export default function SettingsTextField({
+  control,
+  field,
+  label,
+  rules,
+  type,
+}) {
   return (
     <div>
       <Controller
@@ -15,7 +21,7 @@ export default function SettingsTextField({ control, field, label, rules }) {
           <TextField
             fullWidth
             label={label}
-            type="text"
+            type={type}
             required={!!rules.required}
             variant="outlined"
             value={value}

@@ -124,6 +124,7 @@ export default function Settings() {
                   required: "Please enter your name",
                 }}
                 submit={onSubmit(auth, setEditName, setErrorMessageName)}
+                type="text"
               />
             ) : (
               <>
@@ -152,6 +153,7 @@ export default function Settings() {
                   required: "Please enter your email",
                 }}
                 submit={onSubmit(auth, setEditEmail, setErrorMessageEmail)}
+                type="email"
               />
             ) : (
               <>
@@ -172,7 +174,7 @@ export default function Settings() {
             {editPassword ? (
               <SettingsForm
                 cancel={onCancel(setEditPassword)}
-                defaultValue="***"
+                defaultValue=""
                 errorMessage={errorMessagePassword}
                 field="password"
                 rules={{
@@ -183,10 +185,11 @@ export default function Settings() {
                   setEditPassword,
                   setErrorMessagePassword
                 )}
+                type="password"
               />
             ) : (
               <>
-                <div className={classes.inputBox}>***</div>
+                <div className={classes.inputBox}>••••••</div>
                 <IconButton
                   className={classNames(
                     "edit-button-password",
@@ -214,6 +217,7 @@ export default function Settings() {
                   setEditLocation,
                   setErrorMessageLocation
                 )}
+                type="text"
               />
             </Box>
           ) : (
