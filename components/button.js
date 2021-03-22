@@ -19,7 +19,6 @@ export default function Button({ isLoading, title, children, ...buttonProps }) {
       {...buttonProps}
       className={classes.btn}
     >
-      {console.log("button", { buttonProps })}
       {isLoading ? <CircularProgress width="20" /> : title}
       {children}
     </MaterialUIButton>
