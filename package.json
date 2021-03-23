@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "cypress:open":"cypress open"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.3",
@@ -24,6 +25,7 @@
   },
   "devDependencies": {
     "@hookform/devtools": "^2.2.1",
+    "cypress": "^6.8.0",
     "eslint": "^7.20.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-config-standard": "^16.0.2",
