@@ -123,7 +123,7 @@ export default function LoginForm() {
       </div>
       <div>
         <span>
-          <Button title="Login" type="submit" isLoading={isLoading} />
+          <Button title="Log in" type="submit" isLoading={isLoading} />
         </span>
       </div>
       <div>
