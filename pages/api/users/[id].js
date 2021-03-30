@@ -4,6 +4,12 @@ export default async (req, res) => {
   // TODO: Check permissions
   if (req.method === "GET") {
     const user = await getUser(req.query.id);
+
+    if (!user) {
+      res.statusCode = 404;
+      return res.end();
+    }
+
     res.statusCode = 200;
     return res.json(user);
   }
@@ -22,5 +28,5 @@ export default async (req, res) => {
   }
 
   res.statusCode = 404;
-  res.json();
+  res.end();
 };

@@ -21,7 +21,7 @@ export async function createUser(id, data) {
 
 export async function getUser(id) {
   const user = await db.collection("users").doc(id).get();
-  return user.data();
+  return user?.data();
 }
 
 export async function updateUser(id, data) {
