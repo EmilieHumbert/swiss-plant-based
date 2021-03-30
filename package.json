@@ -3,15 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "next start",
-    "cypress:open":"cypress open"
+    "cypress:open": "cypress open"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
-    "ajv": "^7.2.1",
+    "ajv": "^8.0.1",
+    "ajv-formats": "^2.0.1",
     "classnames": "^2.2.6",
     "firebase": "^8.2.4",
     "firebase-admin": "^9.5.0",
@@ -26,6 +27,7 @@
   "devDependencies": {
     "@hookform/devtools": "^2.2.1",
     "cypress": "^6.8.0",
+    "cypress-firebase": "^1.8.0",
     "eslint": "^7.20.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-config-standard": "^16.0.2",
