@@ -1,16 +1,12 @@
-import Ajv from "ajv";
+import { validateUser } from "../validation";
 
 import { db } from "../../config/admin.config";
 
-const schema = require("../schemas/user.json");
-const ajv = new Ajv();
-const validate = ajv.compile(schema);
-
 export async function createUser(id, data) {
-  const valid = validate(data);
+  const valid = validateUser(data);
   if (!valid) {
     const validationError = new Error(
-      `Validation error: ${validate.errors.join(", ")}`
+      `Validation error: ${validateUser.errors.join(", ")}`
     );
     validationError.statusCode = 400;
     throw validationError;
@@ -25,10 +21,10 @@ export async function getUser(id) {
 }
 
 export async function updateUser(id, data) {
-  const valid = validate(data);
+  const valid = validateUser(data);
   if (!valid) {
     const validationError = new Error(
-      `Validation error: ${validate.errors.join(", ")}`
+      `Validation error: ${validateUser.errors.join(", ")}`
     );
     validationError.statusCode = 400;
     throw validationError;
