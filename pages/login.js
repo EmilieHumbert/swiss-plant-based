@@ -16,11 +16,13 @@ export default function logInPage() {
 
       <main>
         <div>
-          <h2>Log in</h2>
-          <p>Don&apos;t have an account?</p>
-          <Link href="/signup">
-            <a href="#">Sign up</a>
-          </Link>
+          <h2 data-cy-title>Log in</h2>
+          <p>
+            Don&apos;t have an account?
+            <Link href="/signup">
+              <a data-cy-signup>Sign up</a>
+            </Link>
+          </p>
         </div>
         <div>
           <LoginForm />

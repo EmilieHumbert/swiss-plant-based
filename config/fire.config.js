@@ -3,7 +3,17 @@ import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
 
-export const firebaseConfig = {
+export const firebaseConfig = global.Cypress
+ ? {
+  apiKey: global.Cypress.env('NEXT_PUBLIC_FIREBASE_API_KEY'),
+  authDomain: global.Cypress.env('NEXT_PUBLIC_FIREBASE_AUTHDOMAIN'),
+  projectId: global.Cypress.env('NEXT_PUBLIC_FIREBASE_PROJECT_ID'),
+  storageBucket: global.Cypress.env('NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET'),
+  messagingSenderId: global.Cypress.env('NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID'),
+  appId: global.Cypress.env('NEXT_PUBLIC_FIREBASE_APP_ID'),
+  measurementId: global.Cypress.env('NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID'),
+ }
+ : {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTHDOMAIN,
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,

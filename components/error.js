@@ -14,5 +14,5 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Error({ message }) {
   const classes = useStyles();
-  return <div className={classes.errorMessage}>{message}</div>;
+  return <div data-cy-error className={classes.errorMessage}>{message}</div>;
 }
