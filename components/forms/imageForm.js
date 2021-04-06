@@ -28,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
   image: { borderRadius: "50%" },
   editButton: {
     background: "white",
-    display: "none",
     pointerEvents: "none",
     position: "absolute",
     right: "20px",
@@ -103,6 +102,7 @@ export default function ImageForm() {
             alt="Profile image"
             width={150}
             height={150}
+            data-cy-image-onChange
           />
           <input
             id="profile-image"

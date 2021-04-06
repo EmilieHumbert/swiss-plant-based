@@ -52,7 +52,6 @@ const useStyles = makeStyles((theme) => ({
     padding: "18.5px 14px",
   },
   editInputBox: {
-    display: "none",
     position: "absolute",
     right: "0",
     top: "0",
@@ -99,10 +98,10 @@ export default function Settings() {
 
   return auth.loading || !auth.user ? null : (
     <Container className={classes.root} maxWidth={"md"} spacing={3}>
-      <h1>Settings</h1>
+      <h1 data-cy-title>Settings</h1>
       <Grid container>
         <Grid item xs={3}>
-          <Box className={classes.imageContainer}>
+          <Box className={classes.imageContainer} data-cy-image>
             <ImageForm />
           </Box>
         </Grid>
