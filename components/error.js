@@ -5,14 +5,19 @@ const useStyles = makeStyles((theme) => ({
   errorMessage: {
     backgroundColor: "#F8D7DA",
     borderRadius: "4px",
-    border:'#D86363 solid 1px',
+    border: "#D86363 solid 1px",
     color: "#A14D55",
     marginTop: "16px",
     padding: "16px",
+    wordWrap: "break-word",
   },
 }));
 
 export default function Error({ message }) {
   const classes = useStyles();
-  return <div data-cy-error className={classes.errorMessage}>{message}</div>;
+  return (
+    <div data-cy-error className={classes.errorMessage}>
+      {message}
+    </div>
+  );
 }
