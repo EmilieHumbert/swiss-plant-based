@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useRequireAuth } from "../hooks/useRequireAuth";
 import SettingsForm from "../components/forms/settingsForm";
 import ImageForm from "../components/forms/imageForm";
+import Error from '../components/error';
 
 import {
   Box,
@@ -72,6 +73,8 @@ export default function Settings() {
   const [errorMessageLocation, setErrorMessageLocation] = useState(null);
   const [errorMessagePassword, setErrorMessagePassword] = useState(null);
 
+  const [submitError, setSubmitError] = useState(null);
+
   const [
     isPasswordConfirmationFormOpen,
     setIsPasswordConfirmationFormOpen,
@@ -83,11 +86,11 @@ export default function Settings() {
       setEdit(false);
       setIsPasswordConfirmationFormOpen(false);
     } catch (err) {
-      console.log(err);
+      console.log('err', err);
       if (err.code === "auth/requires-recent-login") {
         setIsPasswordConfirmationFormOpen(true);
       }
-      // setError(err);
+      setSubmitError(err.message);
     }
   };
 
@@ -234,6 +237,7 @@ export default function Settings() {
               </IconButton>
             </Box>
           )}
+          {submitError && <Error message={submitError} />}
         </Grid>
       </Grid>
     </Container>
