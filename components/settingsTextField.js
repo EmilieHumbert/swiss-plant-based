@@ -19,6 +19,7 @@ export default function SettingsTextField({
         rules={rules}
         render={({ onChange, ref, value }) => (
           <TextField
+            data-cy-input
             fullWidth
             label={label}
             type={type}

@@ -1,9 +1,9 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 
-import SettingsTextField from "../SettingsTextField";
+import SettingsTextField from "../settingsTextField";
 import Error from "../error";
-import PasswordConfirmationForm from "./PasswordConfirmationForm";
+import PasswordConfirmationForm from "./passwordConfirmationForm";
 
 import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
