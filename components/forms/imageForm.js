@@ -21,17 +21,15 @@ const useStyles = makeStyles((theme) => ({
   imageLabel: {
     cursor: "pointer",
     position: "relative",
-    "&:hover .edit-button-image": {
-      display: "block",
-    },
+    display: "block",
   },
   image: { borderRadius: "50%" },
   editButton: {
     background: "white",
     pointerEvents: "none",
     position: "absolute",
-    right: "20px",
-    top: "-120px",
+    right: "0",
+    top: "0",
   },
 }));
 
@@ -97,16 +95,17 @@ export default function ImageForm() {
         <label htmlFor="profile-image" className={classes.imageLabel}>
           <Image
             className={classes.image}
+            data-cy-image-onchange
             loader={imageLoader}
             src={srcImage}
             alt="Profile image"
             width={150}
             height={150}
-            data-cy-image-onChange
           />
           <input
             id="profile-image"
             className={classes.input}
+            data-cy-image-input
             ref={register}
             type="file"
             name="image"
