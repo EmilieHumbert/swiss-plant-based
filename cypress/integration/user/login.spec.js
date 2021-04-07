@@ -16,23 +16,23 @@ describe("/login", () => {
     );
   });
 
-  it("requires email", () => {
+  it("prevents missing email submission", () => {
     cy.get("form").contains("Log in").click();
     cy.focused().should("have.attr", "type", "email");
   });
 
-  it("requires valid email", () => {
+  it("prevents invalid email submission", () => {
     cy.get("[type=email]").type(`invalid`);
     cy.get("form").contains("Log in").click();
     cy.focused().should("have.attr", "type", "email");
   });
 
-  it("requires password", () => {
+  it("prevents missing password submission", () => {
     cy.get("[type=email]").type(`${Cypress.env('email')}{enter}`);
     cy.focused().should("have.attr", "type", "password");
   });
 
-  it("requires valid password", () => {
+  it("prevents invalid password submission", () => {
     cy.get("[type=email]").type(`${Cypress.env('email')}`);
     cy.get("[type=password]").type(`wrongPassword`);
     cy.get("form").contains("Log in").click();
