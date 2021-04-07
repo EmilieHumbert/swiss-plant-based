@@ -3,19 +3,14 @@
   "properties": {
     "name": {
       "type": "string",
+      "minLength": 3,
       "maxLength": 50
     },
     "location": {
       "type": "string",
       "maxLength": 100
-    },
-    "email": {
-      "type": "string",
-      "format": "email"
     }
   },
-  "required": [
-    "name"
-  ],
+  "required": [],
   "additionalProperties": false
 }

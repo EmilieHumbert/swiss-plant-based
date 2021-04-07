@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useRequireAuth } from "../hooks/useRequireAuth";
 import SettingsForm from "../components/forms/settingsForm";
 import ImageForm from "../components/forms/imageForm";
-import Error from '../components/error';
+import Error from "../components/error";
 
 import {
   Box,
@@ -86,7 +86,6 @@ export default function Settings() {
       setEdit(false);
       setIsPasswordConfirmationFormOpen(false);
     } catch (err) {
-      console.log('err', err);
       if (err.code === "auth/requires-recent-login") {
         setIsPasswordConfirmationFormOpen(true);
       }
@@ -124,6 +123,14 @@ export default function Settings() {
                 field="name"
                 rules={{
                   required: "Please enter your name",
+                  maxLength: {
+                    value: 50,
+                    message: "Name should NOT have more than 50 characters",
+                  },
+                  minLength: {
+                    value: 3,
+                    message: "Name should be more than 3 characters",
+                  },
                 }}
                 submit={onSubmit(auth, setEditName, setErrorMessageName)}
                 type="text"
@@ -153,6 +160,10 @@ export default function Settings() {
                 isPasswordConfirmationFormOpen={isPasswordConfirmationFormOpen}
                 rules={{
                   required: "Please enter your email",
+                  pattern: {
+                    value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                    message: "Not a valid email",
+                  },
                 }}
                 submit={onSubmit(auth, setEditEmail, setErrorMessageEmail)}
                 type="email"
@@ -182,6 +193,10 @@ export default function Settings() {
                 isPasswordConfirmationFormOpen={isPasswordConfirmationFormOpen}
                 rules={{
                   required: "Please enter your password",
+                  minLength: {
+                    value: 6,
+                    message: "Should have at least 6 characters",
+                  },
                 }}
                 submit={onSubmit(
                   auth,
@@ -214,6 +229,11 @@ export default function Settings() {
                 field="location"
                 rules={{
                   required: "Please enter your location",
+                  maxLength: {
+                    value: 100,
+                    message:
+                      "Location should NOT have more than 100 characters",
+                  },
                 }}
                 submit={onSubmit(
                   auth,

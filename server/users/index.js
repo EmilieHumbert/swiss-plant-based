@@ -6,7 +6,11 @@ export async function createUser(id, data) {
   const valid = validateUser(data);
   if (!valid) {
     const validationError = new Error(
-      `Validation error: ${validateUser.errors.join(", ")}`
+      `Validation error: ${
+        validateUser.errors
+          .map((error) => `${error.dataPath.slice(1)} ${error.message}`)
+          .join(", ")
+      }`
     );
     validationError.statusCode = 400;
     throw validationError;
@@ -24,7 +28,11 @@ export async function updateUser(id, data) {
   const valid = validateUser(data);
   if (!valid) {
     const validationError = new Error(
-      `Validation error: ${validateUser.errors.join(", ")}`
+      `Validation error: ${
+        validateUser.errors
+          .map((error) => `${error.dataPath.slice(1)} ${error.message}`)
+          .join(", ")
+      }`
     );
     validationError.statusCode = 400;
     throw validationError;

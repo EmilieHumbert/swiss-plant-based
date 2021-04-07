@@ -62,8 +62,10 @@ const useAuthProvider = () => {
         }),
       });
 
-      if (!response.ok) {
-        throw new Error(response);
+      const body = await response.json()
+
+      if (body.error) {
+        throw new Error(body.error);
       }
     }
 
