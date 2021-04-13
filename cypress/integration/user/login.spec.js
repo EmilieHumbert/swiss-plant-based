@@ -40,10 +40,7 @@ describe("/login", () => {
       cy.get("[data-cy-login-email]").type(`${Cypress.env("email")}`);
       cy.get("[data-cy-login-password]").type(`wrongPassword`);
       cy.get("[data-cy-login-button]").click();
-      cy.get("[data-cy-error]").should(
-        "contain",
-        "The password is invalid"
-      );
+      cy.get("[data-cy-error]").should("contain", "The password is invalid");
     });
   });
 
