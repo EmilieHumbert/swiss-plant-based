@@ -1,10 +1,11 @@
 import React, { useState } from "react";
+import Image from "next/image";
 
 import Link from "next/link";
 import { useRouter } from "next/router";
 
 import { useAuth } from "../hooks/useAuth";
-import Button from "../components/button";
+import { DEFAULT_PROFILE_IMAGE } from "../config/constants";
 
 import {
   AppBar,
@@ -16,7 +17,6 @@ import {
   Toolbar,
   Typography,
 } from "@material-ui/core";
-import PersonIcon from "@material-ui/icons/Person";
 import { withStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -27,6 +27,9 @@ const useStyles = makeStyles((theme) => ({
   link: {
     color: "#33691e",
     textDecoration: "none",
+  },
+  image: {
+    borderRadius: "50%",
   },
   menuBar: {
     backgroundColor: "#f1f8e9",
@@ -88,23 +91,32 @@ export default function Navigation() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  console.log("auth", auth);
   return (
     <Container className={classes.root} maxWidth={"md"}>
       <AppBar position="static" className={classes.menuBar}>
-        <Toolbar>
+        <Toolbar data-cv-navigation-bar>
           <Typography variant="h6" className={classes.title}>
             <Link href="/">
-              <a className={classes.link} href="#">
+              <a data-cy-navigation-homebutton className={classes.link}>
                 Home
               </a>
             </Link>
           </Typography>
+          {auth.user && <div>{auth.user.name}</div>}
           <MaterialUIButton
             aria-controls="customized-menu"
+            data-cy-navigation-logo
             onClick={handleClick}
           >
-            <PersonIcon />
+            <Image
+              data-cy-profile-image
+              src={auth.user?.profileImage || DEFAULT_PROFILE_IMAGE}
+              alt="Profile picture"
+              className={classes.image}
+              width={50}
+              height={50}
+            />
           </MaterialUIButton>
           <StyledMenu
             id="customized-menu"
@@ -115,30 +127,44 @@ export default function Navigation() {
           >
             <StyledMenuItem>
               <Link href="/profile">
-                <a className={classes.menuItem}>Profile</a>
+                <a data-cy-navigation-profile className={classes.menuItem}>
+                  Profile
+                </a>
               </Link>
             </StyledMenuItem>
             <StyledMenuItem>
               <Link href="/settings">
-                <a className={classes.menuItem}>Settings</a>
+                <a data-cy-navigation-settings className={classes.menuItem}>
+                  Settings
+                </a>
               </Link>
             </StyledMenuItem>
+            <StyledMenuItem>
+              {auth.user ? (
+                <div>
+                  <a
+                    aria-controls="customized-menu"
+                    data-cy-navigation-signout
+                    className={classes.menuItem}
+                    onClick={() => auth.signOut()}
+                  >
+                    Sign out
+                  </a>
+                </div>
+              ) : (
+                <div>
+                  <a
+                    aria-controls="customized-menu"
+                    data-cy-navigation-signin
+                    className={classes.menuItem}
+                    onClick={() => router.push("/signup")}
+                  >
+                    Log in
+                  </a>
+                </div>
+              )}
+            </StyledMenuItem>
           </StyledMenu>
-          {auth.user ? (
-            <Button
-              aria-controls="customized-menu"
-              onClick={() => auth.signOut()}
-              title="Sign Out"
-              variant="outlined"
-            />
-          ) : (
-            <Button
-              aria-controls="customized-menu"
-              onClick={() => router.push("/signup")}
-              title="Sign In"
-              variant="outlined"
-            />
-          )}
         </Toolbar>
       </AppBar>
     </Container>
