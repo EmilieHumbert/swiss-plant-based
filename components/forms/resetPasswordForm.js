@@ -33,7 +33,7 @@ export default function ResetPasswordForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
+      <div data-cy-resetpassword-email>
         <Controller
           name="email"
           control={control}
@@ -60,7 +60,12 @@ export default function ResetPasswordForm() {
       </div>
       <div>
         <span>
-          <Button title="Send reset link" type="submit" variant="outlined" />
+          <Button
+            data-cy-resetpassword-button
+            title="Send reset link"
+            type="submit"
+            variant="outlined"
+          />
         </span>
       </div>
       {errors.submit && <Error message={errors.submit.message} />}

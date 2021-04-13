@@ -15,11 +15,11 @@ export default function ResetPasswordPage() {
       </Head>
 
       <main>
-        <h2>Reset password</h2>
+        <h2 data-cy-resetpassword-title>Reset your password</h2>
         <p>
           {"Didn't forget? "}
           <Link href="/login">
-            <a href="#">Login</a>
+            <a data-cy-resetpassword-loginlink>Login</a>
           </Link>
         </p>
 
