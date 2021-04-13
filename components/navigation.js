@@ -125,20 +125,24 @@ export default function Navigation() {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <StyledMenuItem>
-              <Link href="/profile">
-                <a data-cy-navigation-profile className={classes.menuItem}>
-                  Profile
-                </a>
-              </Link>
-            </StyledMenuItem>
-            <StyledMenuItem>
-              <Link href="/settings">
-                <a data-cy-navigation-settings className={classes.menuItem}>
-                  Settings
-                </a>
-              </Link>
-            </StyledMenuItem>
+            {auth.user && (
+              <>
+                <StyledMenuItem>
+                  <Link href="/profile">
+                    <a data-cy-navigation-profile className={classes.menuItem}>
+                      Profile
+                    </a>
+                  </Link>
+                </StyledMenuItem>
+                <StyledMenuItem>
+                  <Link href="/settings">
+                    <a data-cy-navigation-settings className={classes.menuItem}>
+                      Settings
+                    </a>
+                  </Link>
+                </StyledMenuItem>
+              </>
+            )}
             <StyledMenuItem>
               {auth.user ? (
                 <div>
