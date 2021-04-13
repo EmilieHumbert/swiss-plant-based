@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 
 import { useAuth } from "../hooks/useAuth";
 import { DEFAULT_PROFILE_IMAGE } from "../config/constants";
+import Button from "./button";
 
 import {
   AppBar,
@@ -109,23 +110,25 @@ export default function Navigation() {
             data-cy-navigation-logo
             onClick={handleClick}
           >
-            <Image
-              data-cy-profile-image
-              src={auth.user?.profileImage || DEFAULT_PROFILE_IMAGE}
-              alt="Profile picture"
-              className={classes.image}
-              width={50}
-              height={50}
-            />
-          </MaterialUIButton>
-          <StyledMenu
-            id="customized-menu"
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
             {auth.user && (
+              <Image
+                data-cy-profile-image
+                src={auth.user?.profileImage || DEFAULT_PROFILE_IMAGE}
+                alt="Profile picture"
+                className={classes.image}
+                width={50}
+                height={50}
+              />
+            )}
+          </MaterialUIButton>
+          {auth.user && (
+            <StyledMenu
+              id="customized-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
               <StyledMenuItem>
                 <Link href="/profile">
                   <a data-cy-navigation-profile className={classes.menuItem}>
@@ -133,8 +136,6 @@ export default function Navigation() {
                   </a>
                 </Link>
               </StyledMenuItem>
-            )}
-            {auth.user && (
               <StyledMenuItem>
                 <Link href="/settings">
                   <a data-cy-navigation-settings className={classes.menuItem}>
@@ -142,9 +143,7 @@ export default function Navigation() {
                   </a>
                 </Link>
               </StyledMenuItem>
-            )}
-            <StyledMenuItem>
-              {auth.user ? (
+              <StyledMenuItem>
                 <div>
                   <a
                     aria-controls="customized-menu"
@@ -155,20 +154,33 @@ export default function Navigation() {
                     Sign out
                   </a>
                 </div>
-              ) : (
-                <div>
-                  <a
-                    aria-controls="customized-menu"
-                    data-cy-navigation-signin
-                    className={classes.menuItem}
-                    onClick={() => router.push("/signup")}
-                  >
-                    Sign up
-                  </a>
-                </div>
-              )}
-            </StyledMenuItem>
-          </StyledMenu>
+              </StyledMenuItem>
+            </StyledMenu>
+          )}
+          {!auth.user && (
+            <>
+              <Button>
+                <a
+                  aria-controls="customized-menu"
+                  data-cy-navigation-login
+                  className={classes.menuItem}
+                  onClick={() => router.push("/login")}
+                >
+                  Log in
+                </a>
+              </Button>
+              <Button>
+                <a
+                  aria-controls="customized-menu"
+                  data-cy-navigation-signin
+                  className={classes.menuItem}
+                  onClick={() => router.push("/signup")}
+                >
+                  Sign up
+                </a>
+              </Button>
+            </>
+          )}
         </Toolbar>
       </AppBar>
     </Container>
