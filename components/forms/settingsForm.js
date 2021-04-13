@@ -64,7 +64,7 @@ export default function SettingsForm({
             />
           </Grid>
           <Grid item xs={3}>
-            <IconButton type="submit">
+            <IconButton type="submit" data-cy-submitbutton>
               <DoneIcon fontSize="small" style={{ color: green[500] }} />
             </IconButton>
             <IconButton onClick={cancel}>
@@ -76,6 +76,7 @@ export default function SettingsForm({
       </form>
       {isPasswordConfirmationFormOpen && (
         <PasswordConfirmationForm
+          data-cy-password-confirmationform
           cancel={cancel}
           submit={() => document.getElementById(formId).submit()}
         />

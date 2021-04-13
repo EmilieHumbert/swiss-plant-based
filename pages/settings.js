@@ -100,7 +100,7 @@ export default function Settings() {
 
   return auth.loading || !auth.user ? null : (
     <Container className={classes.root} maxWidth={"md"} spacing={3}>
-      <h1 data-cy-title>Settings</h1>
+      <h1 data-cy-settings-title>Settings</h1>
       <Grid container>
         <Grid item xs={3}>
           <Box className={classes.imageContainer} data-cy-image>
@@ -137,8 +137,11 @@ export default function Settings() {
               />
             ) : (
               <>
-                <div className={classes.inputBox}>{auth.user.name}</div>
+                <div data-cy-name className={classes.inputBox}>
+                  {auth.user.name}
+                </div>
                 <IconButton
+                  data-cy-name-editbutton
                   className={classNames(
                     "edit-button-title",
                     classes.editInputBox
@@ -170,8 +173,11 @@ export default function Settings() {
               />
             ) : (
               <>
-                <div className={classes.inputBox}>{auth.user.email}</div>
+                <div data-cy-email className={classes.inputBox}>
+                  {auth.user.email}
+                </div>
                 <IconButton
+                  data-cy-email-editbutton
                   className={classNames(
                     "edit-button-email",
                     classes.editInputBox
@@ -207,8 +213,11 @@ export default function Settings() {
               />
             ) : (
               <>
-                <div className={classes.inputBox}>••••••</div>
+                <div data-cy-password className={classes.inputBox}>
+                  ••••••
+                </div>
                 <IconButton
+                  data-cy-password-editbutton
                   className={classNames(
                     "edit-button-password",
                     classes.editInputBox
@@ -245,8 +254,11 @@ export default function Settings() {
             </Box>
           ) : (
             <Box className={classes.inputContainer}>
-              <div className={classes.inputBox}>{auth.user.location}</div>
+              <div data-cy-location className={classes.inputBox}>
+                {auth.user.location}
+              </div>
               <IconButton
+                data-cy-location-editbutton
                 className={classNames(
                   "edit-button-location",
                   classes.editInputBox
