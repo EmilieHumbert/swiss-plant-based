@@ -67,7 +67,7 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
+      <div data-cy-login-email>
         <Controller
           name="email"
           control={control}
@@ -94,7 +94,7 @@ export default function LoginForm() {
         />
         {errors.email && <Error message={errors.email.message} />}
       </div>
-      <div>
+      <div data-cy-login-password>
         <Controller
           name="password"
           control={control}
@@ -123,13 +123,13 @@ export default function LoginForm() {
       </div>
       <div>
         <span>
-          <Button title="Log in" type="submit" isLoading={isLoading} />
+          <Button
+            data-cy-login-button
+            title="Log in"
+            type="submit"
+            isLoading={isLoading}
+          />
         </span>
-      </div>
-      <div>
-        <Link href="/resetPassword">
-          <a href="#">Forgot your password?</a>
-        </Link>
       </div>
       {submitError && <Error message={submitError} />}
     </form>
