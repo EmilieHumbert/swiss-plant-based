@@ -1,4 +1,5 @@
 import { auth } from "../../config/fire.config";
+import "cypress-file-upload";
 
 const email = Cypress.env("email");
 const password = Cypress.env("password");
