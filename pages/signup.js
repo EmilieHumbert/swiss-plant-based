@@ -15,11 +15,11 @@ export default function signUpPage() {
       </Head>
 
       <main>
-        <h2>Sign up</h2>
+        <h2 data-cy-signup-title>Sign up</h2>
         <p>
           Already have an account?
           <Link href="/login">
-            <a href="#">Log In</a>
+            <a data-cy-signup-loginlink>Log In</a>
           </Link>
         </p>
         <SignUpForm />

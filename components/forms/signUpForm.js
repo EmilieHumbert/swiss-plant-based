@@ -61,14 +61,14 @@ export default function SignUpForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
+      <div data-cy-signup-name>
         <Controller
           name="name"
           control={control}
           rules={{
             minLength: {
               value: 3,
-              message: "Longer name!",
+              message: "Should have at least 3 characters",
             },
             required: "Please enter your name",
           }}
@@ -89,7 +89,7 @@ export default function SignUpForm() {
         />
         {errors.name && <Error message={errors.name.message} />}
       </div>
-      <div>
+      <div data-cy-signup-email>
         <Controller
           name="email"
           control={control}
@@ -117,7 +117,7 @@ export default function SignUpForm() {
         />
         {errors.email && <Error message={errors.email.message} />}
       </div>
-      <div>
+      <div data-cy-signup-password>
         <Controller
           name="password"
           control={control}
@@ -147,7 +147,12 @@ export default function SignUpForm() {
       </div>
       <div>
         <span>
-          <Button title="Sign up" type="submit" variant="outlined" />
+          <Button
+            data-cy-signup-button
+            title="Sign up"
+            type="submit"
+            variant="outlined"
+          />
         </span>
       </div>
       {submitError && <Error message={submitError} />}
