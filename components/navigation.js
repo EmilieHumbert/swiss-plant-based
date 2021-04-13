@@ -163,7 +163,7 @@ export default function Navigation() {
                     className={classes.menuItem}
                     onClick={() => router.push("/signup")}
                   >
-                    Log in
+                    Sign up
                   </a>
                 </div>
               )}
