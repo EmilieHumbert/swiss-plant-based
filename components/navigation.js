@@ -91,7 +91,7 @@ export default function Navigation() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  console.log("auth", auth);
+
   return (
     <Container className={classes.root} maxWidth={"md"}>
       <AppBar position="static" className={classes.menuBar}>
@@ -126,22 +126,22 @@ export default function Navigation() {
             onClose={handleClose}
           >
             {auth.user && (
-              <>
-                <StyledMenuItem>
-                  <Link href="/profile">
-                    <a data-cy-navigation-profile className={classes.menuItem}>
-                      Profile
-                    </a>
-                  </Link>
-                </StyledMenuItem>
-                <StyledMenuItem>
-                  <Link href="/settings">
-                    <a data-cy-navigation-settings className={classes.menuItem}>
-                      Settings
-                    </a>
-                  </Link>
-                </StyledMenuItem>
-              </>
+              <StyledMenuItem>
+                <Link href="/profile">
+                  <a data-cy-navigation-profile className={classes.menuItem}>
+                    Profile
+                  </a>
+                </Link>
+              </StyledMenuItem>
+            )}
+            {auth.user && (
+              <StyledMenuItem>
+                <Link href="/settings">
+                  <a data-cy-navigation-settings className={classes.menuItem}>
+                    Settings
+                  </a>
+                </Link>
+              </StyledMenuItem>
             )}
             <StyledMenuItem>
               {auth.user ? (
