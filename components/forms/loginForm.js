@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import { useRouter } from "next/router";
-import Link from "next/link";
 
 import { useAuth } from "../../hooks/useAuth";
 import Button from "../button";
